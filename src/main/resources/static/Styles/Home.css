@@ -1,0 +1,46 @@
+.pagina-inicio { padding-bottom: 90px; }
+    .inicio__buscador { padding: 16px; }
+    .seccion { padding: 0 16px 26px; }
+    .seccion__titulo {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .galeria {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .tarjeta-categoria {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radio);
+      overflow: hidden;
+    }
+    .tarjeta-categoria .imagen-placeholder {
+      width: 100%;
+      height: 100%;
+    }
+    .tarjeta-categoria__etiqueta {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      padding: 4px 10px;
+      background-color: rgba(0,0,0,0.65);
+      color: var(--color-secundario);
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 6px;
+    }
+
+    .inicio__barra { justify-content: space-between; }
+    .inicio__barra .logo__marca { width: 30px; height: 30px; }
+
+    /* escritorio */
+    @media (min-width: 768px) {
+      .pagina-inicio { padding-bottom: 40px; }
+      .galeria { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+      .inicio__buscador { padding: 22px 16px; }
+    }

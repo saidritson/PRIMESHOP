@@ -1,0 +1,36 @@
+.pagina-domicilio { padding-bottom: 40px; }
+
+.domicilio__form {
+  padding: 20px 16px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.domicilio__check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin: 6px 0 22px;
+  cursor: pointer;
+}
+.domicilio__check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-exito);
+}
+
+.domicilio__acciones { display: grid; gap: 12px; }
+
+/* Escritorio: formulario centrado sobre fondo gris (se ve completo) */
+@media (min-width: 768px) {
+  .pagina-domicilio { background: var(--gris-fondo); min-height: 100vh; }
+  .domicilio__form {
+    max-width: 760px;
+    margin: 32px auto;
+    padding: 36px;
+    background: var(--color-secundario);
+    border: 1px solid var(--gris-borde);
+    border-radius: var(--radio);
+  }
+}

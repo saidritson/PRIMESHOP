@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMESHOP - Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/Home.css">
+
+</head>
+<body>
+
+  <div class="pagina-inicio">
+    <header class="barra-superior inicio__barra">
+      <span style="width:60px"></span>
+      <span class="logo">
+        <img class="logo__img" src="/src/main/resources/static/Imagenes/Logo.png" alt="PRIMESHOP">
+      </span>
+
+      <a href="menu.html" class="barra-superior__boton" aria-label="Explorar">
+        <span>Explorar</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="4" y1="7" x2="20" y2="7"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="17" x2="20" y2="17"></line>
+        </svg>
+      </a>
+    </header>
+
+    <div class="inicio__buscador">
+      <form class="buscador" action="#" role="search">
+        <input type="search" placeholder="Buscar en PRIMESHOP" aria-label="Buscar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+        </svg>
+      </form>
+    </div>
+
+    <section class="seccion">
+      <h2 class="seccion__titulo">DESTACADOS</h2>
+      <div class="galeria">
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Ropa deportiva">
+          <span class="tarjeta-categoria__etiqueta">Deportivo</span>
+        </a>
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Ropa de verano">
+          <span class="tarjeta-categoria__etiqueta">Verano</span>
+        </a>
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Ropa de invierno">
+        </a>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion__titulo">ACCESORIOS</h2>
+      <div class="galeria">
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Collares">
+        </a>
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Relojes">
+        </a>
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Bolsos">
+        </a>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <h2 class="seccion__titulo">CALZADO</h2>
+      <div class="galeria">
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Tenis">
+        </a>
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Zapatos">
+        </a>
+        <a href="Secciones.html" class="tarjeta-categoria">
+          <img class="imagen" src="" alt="Tacones">
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <nav class="nav-inferior">
+    <a href="Home.html" class="nav-inferior__item nav-inferior__item--activo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path>
+      </svg>
+      Inicio
+    </a>
+    <a href="Cuenta.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path>
+      </svg>
+      Cuenta
+    </a>
+    <a href="Carrito.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+        <path d="M3 4h2l2.5 12h11l2-8H6"></path>
+      </svg>
+      Carrito
+    </a>
+  </nav>
+
+</body>
+</html>

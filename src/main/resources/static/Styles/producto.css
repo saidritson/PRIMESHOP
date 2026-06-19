@@ -1,0 +1,89 @@
+    .pagina-producto { padding-bottom: 40px; }
+
+    .producto__barra { gap: 12px; }
+    .producto__barra .buscador {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid #777;
+      border-radius: 0;
+      background: transparent;
+      padding: 4px 0;
+    }
+    .producto__barra .buscador input { color: var(--color-secundario); text-align: center; }
+    .producto__barra .buscador input::placeholder { color: #bbb; }
+    .producto__barra a, .producto__barra svg { color: var(--color-secundario); }
+
+    .producto__encabezado { padding: 12px 16px; }
+    .producto__nombre { display: inline; font-size: 16px; font-weight: 800; color: var(--color-exito); }
+    .producto__subtitulo { display: inline; font-size: 14px; color: var(--color-primario); margin-left: 6px; }
+
+    .producto__galeria {
+      margin: 0 16px;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radio);
+      overflow: hidden;
+    }
+    .producto__galeria .imagen-placeholder { width: 100%; height: 100%; }
+    .producto__puntos {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 10px 0 4px;
+    }
+    .producto__puntos span {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+    .producto__puntos span.activo { background: var(--color-primario); }
+    .producto__bloque { padding: 14px 16px; }
+    .tallas { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .tallas__titulo { font-weight: 800; }
+    .talla {
+      border: none;
+      background: var(--gris-fondo);
+      border-radius: 16px;
+      padding: 8px 14px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .talla--activa { background: var(--color-primario); color: var(--color-secundario); }
+
+    .producto__bloque h2 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+    .producto__lista { padding-left: 18px; display: grid; gap: 8px; font-size: 14px; }
+
+    .producto__envio {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .producto__cantidad {
+      width: 100%;
+      border: 1px solid var(--color-primario);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .producto__acciones { display: grid; gap: 12px; }
+
+    /*Escritorio */
+    @media (min-width: 768px) {
+      .producto__cuerpo {
+        max-width: var(--ancho-maximo);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        align-items: start;
+        padding: 16px;
+      }
+      .producto__galeria { margin: 0; }
+      .producto__acciones { max-width: 420px; }
+    }

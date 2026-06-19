@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMESHOP - Detalle del Pedido</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/DetallePedido.css">
+</head>
+<body>
+
+  <div class="pagina-detalle">
+
+    <header class="barra-superior">
+      <a href="Pedidos.html" aria-label="Volver a mis pedidos">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path>
+        </svg>
+      </a>
+      <span class="barra-superior__titulo">PEDIDO #PS-1042</span>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="detalle__cuerpo">
+
+      <section class="detalle__seccion">
+        <div class="detalle__estado">
+          <span class="insignia insignia--warning">Enviado</span>
+          <span class="detalle__entrega">Entrega estimada: 15 jun 2026</span>
+        </div>
+
+        <div class="linea-tiempo">
+          <div class="evento evento--hecho">
+            <div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>
+            <div class="evento__texto">
+              <p class="evento__titulo">Pendiente</p>
+              <p class="evento__fecha">12 jun 2026, 10:02</p>
+            </div>
+          </div>
+          <div class="evento evento--hecho">
+            <div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>
+            <div class="evento__texto">
+              <p class="evento__titulo">Procesando</p>
+              <p class="evento__fecha">12 jun 2026, 11:30</p>
+            </div>
+          </div>
+          <div class="evento evento--hecho">
+            <div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>
+            <div class="evento__texto">
+              <p class="evento__titulo">Enviado</p>
+              <p class="evento__fecha">13 jun 2026, 09:15</p>
+            </div>
+          </div>
+          <div class="evento evento--pendiente">
+            <div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>
+            <div class="evento__texto">
+              <p class="evento__titulo">Entregado</p>
+              <p class="evento__fecha">En camino</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="detalle__seccion">
+        <h2 class="panel__titulo">Direccion de entrega</h2>
+        <div class="panel">
+          <p><strong>Dario Cortez</strong></p>
+          <p>Av. Tecnologico 1111, Centro</p>
+          <p>Cd. Obregon, Sonora, 85000</p>
+        </div>
+      </section>
+
+      <section class="detalle__seccion">
+        <h2 class="panel__titulo">Articulos</h2>
+
+        <article class="detalle__articulo">
+          <span class="detalle__miniatura"><img class="imagen" src="" alt="Sudadera oversize"></span>
+          <div class="detalle__info">
+            <p class="detalle__nombre">Sudadera Oversize</p>
+            <p class="detalle__variante">Talla M &middot; Cantidad 1</p>
+          </div>
+          <span class="detalle__precio">$450</span>
+        </article>
+
+        <article class="detalle__articulo">
+          <span class="detalle__miniatura"><img class="imagen" src="" alt="Tenis Air"></span>
+          <div class="detalle__info">
+            <p class="detalle__nombre">Tenis Air</p>
+            <p class="detalle__variante">Talla 27 &middot; Cantidad 1</p>
+          </div>
+          <span class="detalle__precio">$500</span>
+        </article>
+      </section>
+
+      <section class="detalle__seccion">
+        <div class="resumen">
+          <div class="resumen__fila"><span>Subtotal</span><span>$950</span></div>
+          <div class="resumen__fila"><span>Envio</span><span>$50</span></div>
+          <div class="resumen__fila"><span>Descuento</span><span>-$40</span></div>
+          <div class="resumen__total"><span>Total</span><span>$960</span></div>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

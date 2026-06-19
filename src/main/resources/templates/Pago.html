@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMESHOP - Finalizar Compra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/Pago.css">
+</head>
+<body>
+
+  <div class="pagina-pago">
+
+    <header class="barra-superior">
+      <a href="Carrito.html" aria-label="Volver al carrito">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path>
+        </svg>
+      </a>
+      <span class="barra-superior__titulo">FINALIZAR COMPRA</span>
+      <span style="width:24px"></span>
+    </header>
+
+    <ol class="pasos">
+      <li class="paso paso--activo"><span class="paso__num">1</span>Envio</li>
+      <li class="paso paso--activo"><span class="paso__num">2</span>Pago</li>
+      <li class="paso"><span class="paso__num">3</span>Confirmar</li>
+    </ol>
+
+    <div class="pago__cuerpo">
+
+      <div class="pago__columna">
+
+        <section class="pago__seccion">
+          <h2 class="pago__rotulo">Direccion de envio</h2>
+          <div class="panel pago__direccion">
+            <div>
+              <p><strong>Dario Cortez</strong></p>
+              <p>Av. Tecnologico 1111, Centro</p>
+              <p>Cd. Obregon, Sonora, 85000</p>
+            </div>
+            <a href="Domicilio.html" class="pago__cambiar">Cambiar</a>
+          </div>
+        </section>
+
+        <section class="pago__seccion">
+          <h2 class="pago__rotulo">Metodo de pago</h2>
+
+          <label class="metodo metodo--activo">
+            <input type="radio" name="metodo" checked>
+            <span>Tarjeta de credito &bull;&bull;&bull;&bull; 4242</span>
+          </label>
+
+          <label class="metodo">
+            <input type="radio" name="metodo">
+            <span>Pago contra entrega</span>
+          </label>
+
+          <label class="metodo">
+            <input type="radio" name="metodo">
+            <span>Transferencia bancaria</span>
+          </label>
+        </section>
+
+        <section class="pago__seccion">
+          <h2 class="pago__rotulo">Articulos (3)</h2>
+          <div class="pago__articulos">
+            <div class="pago__articulo"><span>Sudadera Oversize &times;1</span><span>$450</span></div>
+            <div class="pago__articulo"><span>Tenis Air &times;1</span><span>$500</span></div>
+            <div class="pago__articulo"><span>Gorra Negra &times;1</span><span>$210</span></div>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="pago__columna">
+        <section class="pago__seccion">
+          <h2 class="pago__rotulo">Resumen de la orden</h2>
+          <div class="resumen">
+            <div class="resumen__fila"><span>Subtotal</span><span>$1160</span></div>
+            <div class="resumen__fila"><span>Envio</span><span>$50</span></div>
+            <div class="resumen__fila"><span>Descuento</span><span>-$250</span></div>
+            <div class="resumen__total"><span>Total</span><span>$960</span></div>
+          </div>
+        </section>
+
+        <div class="pago__confirmar">
+          <a href="DetallePedido.html" class="boton boton--exito">Confirmar pedido</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMESHOP - Mis Pedidos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/Pedidos.css">
+</head>
+<body>
+
+  <div class="pagina-pedidos">
+
+    <header class="barra-superior">
+      <a href="Cuenta.html" aria-label="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path>
+        </svg>
+      </a>
+      <span class="barra-superior__titulo">MIS PEDIDOS</span>
+      <a href="Secciones.html" aria-label="Buscar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+        </svg>
+      </a>
+    </header>
+
+    <nav class="barra-filtros" aria-label="Filtrar pedidos por estado">
+      <button type="button" class="filtro-chip filtro-chip--activo">Todos</button>
+      <button type="button" class="filtro-chip">Pendiente</button>
+      <button type="button" class="filtro-chip">Procesando</button>
+      <button type="button" class="filtro-chip">Enviado</button>
+      <button type="button" class="filtro-chip">Entregado</button>
+    </nav>
+
+    <section class="pedidos__lista">
+
+      <article class="pedido">
+        <header class="pedido__cabecera">
+          <span class="pedido__folio">Pedido #PS-1042</span>
+          <span class="insignia insignia--warning">Enviado</span>
+        </header>
+        <p class="pedido__meta">12 jun 2026 &middot; 3 articulos</p>
+        <div class="pedido__miniaturas">
+          <img class="imagen" src="" alt="Sudadera oversize">
+          <img class="imagen" src="" alt="Tenis Air">
+          <img class="imagen" src="" alt="Gorra negra">
+        </div>
+        <footer class="pedido__pie">
+          <span class="pedido__total">$960</span>
+          <a href="DetallePedido.html" class="pedido__ver">Ver detalle &rsaquo;</a>
+        </footer>
+      </article>
+
+      <article class="pedido">
+        <header class="pedido__cabecera">
+          <span class="pedido__folio">Pedido #PS-1038</span>
+          <span class="insignia insignia--exito">Entregado</span>
+        </header>
+        <p class="pedido__meta">02 jun 2026 &middot; 1 articulo</p>
+        <div class="pedido__miniaturas">
+          <img class="imagen" src="" alt="Tenis Air">
+        </div>
+        <footer class="pedido__pie">
+          <span class="pedido__total">$500</span>
+          <a href="DetallePedido.html" class="pedido__ver">Ver detalle &rsaquo;</a>
+        </footer>
+      </article>
+
+      <article class="pedido">
+        <header class="pedido__cabecera">
+          <span class="pedido__folio">Pedido #PS-1031</span>
+          <span class="insignia insignia--info">Procesando</span>
+        </header>
+        <p class="pedido__meta">28 may 2026 &middot; 2 articulos</p>
+        <div class="pedido__miniaturas">
+          <img class="imagen" src="" alt="Playera basica">
+          <img class="imagen" src="" alt="Pantalon de mezclilla">
+        </div>
+        <footer class="pedido__pie">
+          <span class="pedido__total">$420</span>
+          <a href="DetallePedido.html" class="pedido__ver">Ver detalle &rsaquo;</a>
+        </footer>
+      </article>
+
+      <article class="pedido">
+        <header class="pedido__cabecera">
+          <span class="pedido__folio">Pedido #PS-1024</span>
+          <span class="insignia insignia--neutral">Pendiente</span>
+        </header>
+        <p class="pedido__meta">20 may 2026 &middot; 1 articulo</p>
+        <div class="pedido__miniaturas">
+          <img class="imagen" src="" alt="Vestido de lino">
+        </div>
+        <footer class="pedido__pie">
+          <span class="pedido__total">$390</span>
+          <a href="DetallePedido.html" class="pedido__ver">Ver detalle &rsaquo;</a>
+        </footer>
+      </article>
+
+    </section>
+
+  </div>
+
+  <nav class="nav-inferior">
+    <a href="Home.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path>
+      </svg>
+      Inicio
+    </a>
+    <a href="Cuenta.html" class="nav-inferior__item nav-inferior__item--activo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path>
+      </svg>
+      Cuenta
+    </a>
+    <a href="Carrito.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+        <path d="M3 4h2l2.5 12h11l2-8H6"></path>
+      </svg>
+      Carrito
+    </a>
+  </nav>
+
+</body>
+</html>

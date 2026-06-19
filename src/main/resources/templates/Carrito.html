@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMESHOP - Carrito de Compra</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/carrito.css">
+</head>
+<body>
+
+  <div class="pagina-carrito">
+
+    <header class="barra-superior carrito__barra">
+      <a href="Home.html" aria-label="Inicio">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path>
+        </svg>
+      </a>
+      <span class="logo">
+        <img class="logo__img" src="" alt="PRIMESHOP">
+      </span>
+      <a href="Cuenta.html" aria-label="Cuenta">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path>
+        </svg>
+      </a>
+    </header>
+
+    <div class="carrito__encabezado">
+      <h1 class="carrito__titulo">Carrito de Compra</h1>
+      <p class="carrito__conteo">3 Articulos</p>
+    </div>
+
+    <section class="carrito__lista">
+      <article class="articulo">
+        <div class="articulo__imagen"><img class="imagen" src="" alt="Camiseta de compresion"></div>
+        <div>
+          <p class="articulo__nombre">Camiseta de compresion</p>
+          <p class="articulo__precio">$250</p>
+          <p class="articulo__desc">Camiseta de compresion deportiva tamano M color Gris</p>
+          <p class="estado-exito">Disponible</p>
+        </div>
+        <div class="articulo__controles">
+          <div class="cantidad">
+            <button type="button" aria-label="Quitar uno">&minus;</button>
+            <span>1</span>
+            <button type="button" aria-label="Agregar uno">+</button>
+          </div>
+          <a href="Pago.html" class="boton boton--primario articulo__comprar">Comprar</a>
+          <button type="button" class="articulo__eliminar" aria-label="Eliminar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M6 6l1 14h10l1-14"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <article class="articulo">
+        <div class="articulo__imagen"><img class="imagen imagen--oscura" src="" alt="Tenis Nike Air"></div>
+        <div>
+          <p class="articulo__nombre">Tenis Nike</p>
+          <p class="articulo__precio">$500</p>
+          <p class="articulo__desc">Tenis Nike Air talla 27.0cm color Blanco</p>
+          <p class="estado-warning">3 en Existencia</p>
+        </div>
+        <div class="articulo__controles">
+          <div class="cantidad">
+            <button type="button" aria-label="Quitar uno">&minus;</button>
+            <span>1</span>
+            <button type="button" aria-label="Agregar uno">+</button>
+          </div>
+          <a href="Pago.html" class="boton boton--primario articulo__comprar">Comprar</a>
+          <button type="button" class="articulo__eliminar" aria-label="Eliminar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M6 6l1 14h10l1-14"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+      <article class="articulo">
+        <div class="articulo__imagen"><img class="imagen" src="" alt="Pants deportivo Puma"></div>
+        <div>
+          <p class="articulo__nombre">Pants Deportivo</p>
+          <p class="articulo__precio">$210</p>
+          <p class="articulo__desc">Pants deportivo Puma talla 38x38 color Negro</p>
+          <p class="estado-exito">Disponible</p>
+        </div>
+        <div class="articulo__controles">
+          <div class="cantidad">
+            <button type="button" aria-label="Quitar uno">&minus;</button>
+            <span>1</span>
+            <button type="button" aria-label="Agregar uno">+</button>
+          </div>
+          <a href="Pago.html" class="boton boton--primario articulo__comprar">Comprar</a>
+          <button type="button" class="articulo__eliminar" aria-label="Eliminar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M6 6l1 14h10l1-14"></path>
+            </svg>
+          </button>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="carrito__total">
+      <span>TOTAL:</span>
+      <span>$960</span>
+    </div>
+
+    <a href="Pago.html" class="carrito__pagar">
+      <span>PAGAR</span>
+      <svg width="28" height="20" viewBox="0 0 28 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="0" y1="10" x2="26" y2="10"></line><path d="M19 3l7 7-7 7"></path>
+      </svg>
+    </a>
+
+  </div>
+
+  <nav class="nav-inferior">
+    <a href="Home.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path>
+      </svg>
+      Inicio
+    </a>
+    <a href="Cuenta.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path>
+      </svg>
+      Cuenta
+    </a>
+    <a href="Carrito.html" class="nav-inferior__item nav-inferior__item--activo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+        <path d="M3 4h2l2.5 12h11l2-8H6"></path>
+      </svg>
+      Carrito
+    </a>
+  </nav>
+
+</body>
+</html>

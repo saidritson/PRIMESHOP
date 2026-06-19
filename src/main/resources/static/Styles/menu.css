@@ -1,0 +1,103 @@
+    .menu {
+      min-height: 100vh;
+      background-color: var(--color-primario);
+      color: var(--color-secundario);
+      padding: 16px 20px 40px;
+    }
+
+    .menu__cabecera {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .menu__cabecera .logo {
+      flex-direction: column;
+      gap: 4px;
+    }
+    .menu__cabecera .logo__marca { width: 30px; height: 30px; }
+    .menu__cabecera .logo__texto { font-size: 11px; }
+    .menu__cerrar {
+      background: none;
+      border: none;
+      color: var(--color-secundario);
+      cursor: pointer;
+    }
+
+    .menu__titular {
+      font-size: 34px;
+      font-weight: 800;
+      font-style: italic;
+      margin-bottom: 22px;
+    }
+
+    .menu__buscador {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #555;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+    .menu__buscador input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--color-secundario);
+      font-family: inherit;
+      font-size: 15px;
+      text-align: center;
+    }
+    .menu__buscador input::placeholder { color: #bbb; }
+    .menu__buscador input:focus { outline: none; }
+    .menu__buscador svg { color: var(--color-secundario); }
+
+    .menu__atajos {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .pildora {
+      border: 1px solid var(--color-secundario);
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-secundario);
+    }
+
+    .menu__grupo { margin-bottom: 28px; }
+    .menu__grupo h2 {
+      font-size: 16px;
+      font-weight: 800;
+      border-bottom: 1px solid #555;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .menu__lista {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .menu__lista a {
+      font-size: 14px;
+      color: #e8e8e8;
+    }
+
+    .menu__pie {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 40px;
+    }
+
+    /*Escritorio*/
+    @media (min-width: 768px) {
+      .menu { padding-inline: clamp(20px, 4vw, 64px); }
+      .menu__titular { font-size: 48px; }
+      .menu__lista {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      }
+    }

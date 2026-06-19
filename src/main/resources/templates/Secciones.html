@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMESHOP - Secciones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/Secciones.css">
+</head>
+<body>
+
+  <div class="pagina-secciones">
+
+    <header class="barra-superior">
+      <a href="Home.html" aria-label="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path>
+        </svg>
+      </a>
+      <img class="logo__img" src="" alt="PRIMESHOP">
+      <a href="Carrito.html" aria-label="Carrito">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+          <path d="M3 4h2l2.5 12h11l2-8H6"></path>
+        </svg>
+      </a>
+    </header>
+
+    <div class="secciones__buscador">
+      <form class="buscador" action="#" role="search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+        </svg>
+        <input type="search" name="nombre" placeholder="Buscar por nombre" aria-label="Buscar productos por nombre">
+      </form>
+    </div>
+
+    <h1 class="secciones__titulo">Ropa de Mujer</h1>
+
+    <nav class="barra-filtros" aria-label="Filtrar por categoria">
+      <button type="button" class="filtro-chip filtro-chip--activo">Todo</button>
+      <button type="button" class="filtro-chip">Playera</button>
+      <button type="button" class="filtro-chip">Sudadera</button>
+      <button type="button" class="filtro-chip">Vestidos</button>
+      <button type="button" class="filtro-chip">Pantalon</button>
+      <button type="button" class="filtro-chip">Tenis</button>
+      <button type="button" class="filtro-chip">Accesorios</button>
+    </nav>
+
+    <form class="secciones__controles" action="#">
+      <label class="control">
+        <span>Ordenar por</span>
+        <select name="orden">
+          <option>Relevancia</option>
+          <option>Precio: menor a mayor</option>
+          <option>Precio: mayor a menor</option>
+          <option>Nombre: A - Z</option>
+        </select>
+      </label>
+      <label class="control">
+        <span>Precio maximo: $1500</span>
+        <input type="range" name="precio" min="0" max="3000" step="50" value="1500">
+      </label>
+    </form>
+
+    <section class="galeria-productos" aria-label="Productos">
+
+      <a class="tarjeta-producto" href="Producto.html">
+        <div class="tarjeta-producto__imagen">
+          <img class="imagen" src="" alt="Sudadera oversize color gris">
+        </div>
+        <div class="tarjeta-producto__cuerpo">
+          <span class="tarjeta-producto__nombre">Sudadera Oversize</span>
+          <span class="tarjeta-producto__precio">$450</span>
+          <span class="insignia insignia--exito">En stock</span>
+        </div>
+      </a>
+
+      <a class="tarjeta-producto" href="Producto.html">
+        <div class="tarjeta-producto__imagen">
+          <img class="imagen" src="" alt="Tenis deportivos blancos">
+        </div>
+        <div class="tarjeta-producto__cuerpo">
+          <span class="tarjeta-producto__nombre">Tenis Air</span>
+          <span class="tarjeta-producto__precio">$500</span>
+          <span class="insignia insignia--warning">3 piezas</span>
+        </div>
+      </a>
+
+      <a class="tarjeta-producto" href="Producto.html">
+        <div class="tarjeta-producto__imagen">
+          <img class="imagen" src="" alt="Vestido de lino beige">
+        </div>
+        <div class="tarjeta-producto__cuerpo">
+          <span class="tarjeta-producto__nombre">Vestido de Lino</span>
+          <span class="tarjeta-producto__precio">$390</span>
+          <span class="insignia insignia--error">Agotado</span>
+        </div>
+      </a>
+
+      <a class="tarjeta-producto" href="Producto.html">
+        <div class="tarjeta-producto__imagen">
+          <img class="imagen" src="" alt="Playera basica negra de algodon">
+        </div>
+        <div class="tarjeta-producto__cuerpo">
+          <span class="tarjeta-producto__nombre">Playera Basica</span>
+          <span class="tarjeta-producto__precio">$180</span>
+          <span class="insignia insignia--exito">En stock</span>
+        </div>
+      </a>
+
+      <a class="tarjeta-producto" href="Producto.html">
+        <div class="tarjeta-producto__imagen">
+          <img class="imagen" src="" alt="Pantalon de mezclilla azul">
+        </div>
+        <div class="tarjeta-producto__cuerpo">
+          <span class="tarjeta-producto__nombre">Pantalon Mezclilla</span>
+          <span class="tarjeta-producto__precio">$620</span>
+          <span class="insignia insignia--exito">En stock</span>
+        </div>
+      </a>
+
+      <a class="tarjeta-producto" href="Producto.html">
+        <div class="tarjeta-producto__imagen">
+          <img class="imagen" src="" alt="Gorra negra ajustable">
+        </div>
+        <div class="tarjeta-producto__cuerpo">
+          <span class="tarjeta-producto__nombre">Gorra Negra</span>
+          <span class="tarjeta-producto__precio">$210</span>
+          <span class="insignia insignia--warning">2 piezas</span>
+        </div>
+      </a>
+
+    </section>
+
+  </div>
+
+  <nav class="nav-inferior">
+    <a href="Home.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path>
+      </svg>
+      Inicio
+    </a>
+    <a href="Cuenta.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path>
+      </svg>
+      Cuenta
+    </a>
+    <a href="Carrito.html" class="nav-inferior__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+        <path d="M3 4h2l2.5 12h11l2-8H6"></path>
+      </svg>
+      Carrito
+    </a>
+  </nav>
+
+</body>
+</html>

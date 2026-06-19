@@ -1,0 +1,42 @@
+.pagina-cuenta { padding-bottom: 90px; }
+
+.cuenta__perfil {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 16px;
+}
+.cuenta__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: none;
+}
+.cuenta__nombre { font-size: 18px; font-weight: 800; }
+.cuenta__correo { font-size: 13px; color: var(--gris-texto); margin-bottom: 6px; }
+
+.cuenta__lista { list-style: none; padding: 0 16px; }
+.cuenta__opcion {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--gris-borde);
+  font-weight: 600;
+}
+.cuenta__opcion svg { width: 22px; height: 22px; color: var(--gris-texto); flex: none; }
+.cuenta__opcion .chevron { margin-left: auto; color: var(--gris-borde); }
+.cuenta__opcion--peligro { color: var(--color-error); }
+.cuenta__opcion--peligro svg { color: var(--color-error); }
+
+@media (min-width: 768px) {
+  .pagina-cuenta { padding-bottom: 40px; }
+  .cuenta__perfil,
+  .cuenta__lista { max-width: 1000px; margin-inline: auto; }
+  .cuenta__lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    column-gap: 40px;
+  }
+}

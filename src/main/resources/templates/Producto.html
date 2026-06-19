@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMESHOP - Detalle de Producto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/producto.css">
+</head>
+<body>
+
+  <div class="pagina-producto">
+    <header class="barra-superior producto__barra">
+      <a href="Secciones.html" aria-label="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path>
+        </svg>
+      </a>
+      <form class="buscador" action="#" role="search">
+        <input type="search" placeholder="Buscar en PRIMESHOP" aria-label="Buscar">
+      </form>
+      <button type="submit" class="barra-superior__boton" aria-label="Buscar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+        </svg>
+      </button>
+    </header>
+
+    <div class="producto__encabezado">
+      <h1 class="producto__nombre">Tenis Nike Air</h1>
+      <span class="producto__subtitulo">Calzado Deportivo Unisex</span>
+    </div>
+
+    <div class="producto__cuerpo">
+      <div>
+        <div class="producto__galeria">
+          <img class="imagen imagen--oscura" src="" alt="Foto del producto Tenis Nike Air">
+        </div>
+        <div class="producto__puntos">
+          <span class="activo"></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div>
+
+        <div class="producto__bloque">
+          <div class="tallas">
+            <span class="tallas__titulo">Talla:</span>
+            <button type="button" class="talla talla--activa">25 cm</button>
+            <button type="button" class="talla">25.5 cm</button>
+            <button type="button" class="talla">26 cm</button>
+            <button type="button" class="talla">26.5 cm</button>
+          </div>
+        </div>
+
+        <div class="producto__bloque">
+          <h2>Acerca de este Articulo</h2>
+          <ul class="producto__lista">
+            <li>La parte superior flexible presenta un elegante diseno clasico con cordones. Lengueta y cuello acolchados para mayor comodidad.</li>
+            <li>La plantilla acolchada con soporte para el arco proporciona soporte en el mediopie al moverse.</li>
+            <li>Estas zapatillas casuales de moda son duraderas, resistentes al desgaste y antideslizantes.</li>
+            <li>Entregamos cordones originales de repuesto a nuestros clientes. PRIMESHOP se dedica a brindar un servicio atento a cada cliente.</li>
+          </ul>
+        </div>
+
+        <div class="producto__bloque">
+          <p class="producto__envio">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle>
+            </svg>
+            Enviar a Usuario - Ciudad 1111#
+          </p>
+          <p class="estado-warning" style="margin-top:8px">3 en existencia</p>
+        </div>
+
+        <div class="producto__bloque">
+          <input type="text" class="producto__cantidad" value="Cantidad: 1" aria-label="Cantidad">
+          <div class="producto__acciones">
+            <a href="Carrito.html" class="boton boton--primario">Agregar al Carrito</a>
+            <a href="Pago.html" class="boton boton--exito">Comprar Ahora</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+.pagina-detalle { padding-bottom: 40px; }
+
+.detalle__cuerpo { max-width: 560px; margin: 0 auto; }
+.detalle__seccion { padding: 14px 16px; }
+
+.detalle__estado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.detalle__entrega { font-size: 13px; color: var(--gris-texto); }
+
+.detalle__articulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gris-borde);
+}
+.detalle__miniatura {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex: none;
+}
+.detalle__info { flex: 1; }
+.detalle__nombre { font-size: 14px; font-weight: 600; }
+.detalle__variante { font-size: 12px; color: var(--gris-texto); }
+.detalle__precio { font-weight: 800; }
+
+/* Escritorio */
+@media (min-width: 768px) {
+  .detalle__cuerpo {
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 0 36px;
+    align-items: start;
+  }
+}

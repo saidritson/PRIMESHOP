@@ -1,0 +1,48 @@
+.pagina-pedidos { padding-bottom: 90px; }
+
+.pedidos__lista {
+  display: grid;
+  gap: 14px;
+  padding: 14px 16px;
+}
+
+.pedido {
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+  padding: 14px;
+}
+.pedido__cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pedido__folio { font-weight: 800; }
+.pedido__meta {
+  font-size: 13px;
+  color: var(--gris-texto);
+  margin: 6px 0 10px;
+}
+.pedido__miniaturas {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.pedido__miniaturas .imagen {
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+}
+.pedido__pie {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pedido__total { font-size: 18px; font-weight: 800; }
+.pedido__ver { color: var(--color-exito); font-weight: 700; font-size: 14px; }
+
+@media (min-width: 768px) {
+  .pagina-pedidos {
+    padding-bottom: 40px;
+  }
+  .pedidos__lista { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+}

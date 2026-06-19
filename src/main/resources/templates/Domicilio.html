@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMESHOP - Direccion de Envio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/src/main/resources/static/Styles/Domicilio.css">
+</head>
+<body>
+
+  <div class="pagina-domicilio">
+
+    <header class="barra-superior">
+      <a href="Pago.html" aria-label="Volver">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path>
+        </svg>
+      </a>
+      <span class="barra-superior__titulo">DIRECCION DE ENVIO</span>
+      <span style="width:24px"></span>
+    </header>
+
+    <form class="domicilio__form" action="#" method="post">
+
+      <div class="campo">
+        <label class="campo__etiqueta" for="nombre">Nombre completo</label>
+        <div class="campo__control">
+          <input type="text" id="nombre" name="nombre" autocomplete="name">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label class="campo__etiqueta" for="telefono">Telefono</label>
+        <div class="campo__control">
+          <input type="tel" id="telefono" name="telefono" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label class="campo__etiqueta" for="calle">Calle y numero</label>
+        <div class="campo__control">
+          <input type="text" id="calle" name="calle" autocomplete="address-line1">
+        </div>
+      </div>
+
+      <div class="campos-fila">
+        <div class="campo">
+          <label class="campo__etiqueta" for="colonia">Colonia</label>
+          <div class="campo__control">
+            <input type="text" id="colonia" name="colonia">
+          </div>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="cp">Codigo postal</label>
+          <div class="campo__control">
+            <input type="text" id="cp" name="cp" autocomplete="postal-code">
+          </div>
+        </div>
+      </div>
+
+      <div class="campos-fila">
+        <div class="campo">
+          <label class="campo__etiqueta" for="ciudad">Ciudad</label>
+          <div class="campo__control">
+            <input type="text" id="ciudad" name="ciudad">
+          </div>
+        </div>
+        <div class="campo">
+          <label class="campo__etiqueta" for="estado">Estado</label>
+          <div class="campo__control">
+            <select id="estado" name="estado">
+              <option>Sonora</option>
+              <option>Sinaloa</option>
+              <option>Jalisco</option>
+              <option>Ciudad de Mexico</option>
+              <option>Nuevo Leon</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label class="campo__etiqueta" for="referencias">Referencias (opcional)</label>
+        <div class="campo__control">
+          <textarea id="referencias" name="referencias" placeholder="Color de la casa, entre que calles, etc."></textarea>
+        </div>
+      </div>
+
+      <label class="domicilio__check">
+        <input type="checkbox" name="predeterminada" checked>
+        <span>Usar como direccion predeterminada</span>
+      </label>
+
+      <div class="domicilio__acciones">
+        <button type="submit" class="boton boton--primario">Guardar direccion</button>
+      </div>
+
+    </form>
+
+  </div>
+
+</body>
+</html>
