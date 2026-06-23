@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIMESHOP - Admin Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/Styles/EstilosCompartidos.css}">
+    <link rel="stylesheet" th:href="@{/Styles/AdminLogin.css}">
+</head>
+<body>
+<main class="autenticacion">
+    <section class="autenticacion__tarjeta">
+
+        <header class="autenticacion__encabezado">
+        <span class="logo">
+          <img class="logo__img logo__img--mediano" src="" alt="PRIMESHOP">
+        </span>
+            <span class="etiqueta-admin">Panel Administrativo</span>
+            <h1 class="autenticacion__titulo">Acceso Administrador</h1>
+            <p class="autenticacion__subtitulo">Inicia sesion con tu cuenta de administrador para continuar</p>
+        </header>
+
+        <p th:if="${param.error}" class="mensaje mensaje--error">Correo o contraseña incorrectos</p>
+        <p th:if="${param.logout}" class="mensaje mensaje--exito">Sesion cerrada correctamente</p>
+
+        <form th:action="@{/admin/login}" method="post">
+            <div class="campo">
+                <label class="campo__etiqueta" for="correo">Correo electronico</label>
+                <div class="campo__control">
+                    <input type="email" id="correo" name="correo" autocomplete="email">
+                </div>
+            </div>
+
+            <div class="campo">
+                <label class="campo__etiqueta" for="contrasena">Contraseña</label>
+                <div class="campo__control">
+                    <input type="password" id="contrasena" name="contrasena" autocomplete="current-password">
+                    <svg class="campo__icono" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="autenticacion__acciones">
+                <button type="submit" class="boton boton--primario">Iniciar Sesion</button>
+            </div>
+        </form>
+
+        <p class="autenticacion__enlace">
+            <a href="/">&larr; Volver a la tienda</a>
+        </p>
+
+        <p class="autenticacion__legal">
+            Este acceso es exclusivo para personal administrador de PRIMESHOP.
+        </p>
+
+    </section>
+</main>
+</body>
+</html>
