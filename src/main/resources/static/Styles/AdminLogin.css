@@ -1,0 +1,28 @@
+/* ============================================================
+   PRIMESHOP - Estilos exclusivos de AdminLogin.html
+   Lo que se comparte con el login de cliente (tarjeta, campos,
+   botones) vive en EstilosCompartidos.css. Aqui solo va lo
+   unico de esta pantalla.
+   ============================================================ */
+
+/* ---------- 1. ETIQUETA DE PANEL ---------- */
+.etiqueta-admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background-color: var(--gris-fondo);
+    color: var(--gris-texto);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ---------- 2. SUBTITULO DEL ENCABEZADO ---------- */
+.autenticacion__subtitulo {
+    font-size: 13px;
+    color: var(--gris-texto);
+    text-align: center;
+}

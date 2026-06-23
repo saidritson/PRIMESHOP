@@ -464,4 +464,21 @@ a {
     border-radius: var(--radio);
     box-shadow: 0 10px 40px rgba(0,0,0,0.08);
   }
+  /* ---------- 23. MENSAJES DE RETROALIMENTACION ---------- */
+  .mensaje {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    padding: 10px 14px;
+    border-radius: var(--radio);
+  }
+  .mensaje--error {
+    background-color: #f8dada;
+    color: var(--color-error);
+  }
+  .mensaje--exito {
+    background-color: #d8f0e7;
+    color: #00674e;
+  }
 }
