@@ -2,12 +2,14 @@ package com.example.PRIMESHOP.servicio;
 
 import Dominio.Categoria;
 import com.example.PRIMESHOP.dto.CategoriaFormDto;
+import com.example.PRIMESHOP.excepcion.RecursoDuplicadoException;
+import com.example.PRIMESHOP.excepcion.RecursoNoEncontradoException;
+import com.example.PRIMESHOP.excepcion.ReglaNegocioException;
 import com.example.PRIMESHOP.repositorio.CategoriaRepositorio;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Servicio de negocio para la gestión de categorías.
@@ -37,7 +39,7 @@ public class CategoriaServicio {
     @Transactional(readOnly = true)
     public Categoria buscarPorId(int id) {
         return categoriaRepo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Categoría no encontrada con id: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría", id));
     }
 
     // ── Creación ───────────────────────────────────────────────────────────
@@ -73,7 +75,7 @@ public class CategoriaServicio {
     public void eliminar(int id) {
         Categoria categoria = buscarPorId(id);
         if (categoria.getCantidadProductos() > 0) {
-            throw new IllegalStateException(
+            throw new ReglaNegocioException(
                     "No se puede eliminar la categoría '" + categoria.getNombre() +
                     "' porque tiene " + categoria.getCantidadProductos() + " producto(s) asociado(s).");
         }
@@ -98,11 +100,11 @@ public class CategoriaServicio {
     private void validarNombreUnico(String nombre, Integer idExcluido) {
         if (idExcluido == null) {
             if (categoriaRepo.findByNombreIgnoreCase(nombre).isPresent()) {
-                throw new IllegalArgumentException("Ya existe una categoría con el nombre '" + nombre + "'");
+                throw new RecursoDuplicadoException("Ya existe una categoría con el nombre '" + nombre + "'");
             }
         } else {
             if (categoriaRepo.existsByNombreIgnoreCaseAndIdNot(nombre, idExcluido)) {
-                throw new IllegalArgumentException("Ya existe otra categoría con el nombre '" + nombre + "'");
+                throw new RecursoDuplicadoException("Ya existe otra categoría con el nombre '" + nombre + "'");
             }
         }
     }
