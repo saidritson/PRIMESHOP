@@ -4,6 +4,7 @@ import Dominio.Categoria;
 import Dominio.Producto;
 import Dominio.ProductoTalla;
 import com.example.PRIMESHOP.dto.ProductoFormDto;
+import com.example.PRIMESHOP.excepcion.RecursoNoEncontradoException;
 import com.example.PRIMESHOP.repositorio.CategoriaRepositorio;
 import com.example.PRIMESHOP.repositorio.ProductoRepositorio;
 import com.example.PRIMESHOP.repositorio.ProductoTallaRepositorio;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Servicio de negocio para la gestión de productos.
@@ -48,7 +48,7 @@ public class ProductoServicio {
     @Transactional(readOnly = true)
     public Producto buscarPorId(int id) {
         return productoRepo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado con id: " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Producto", id));
     }
 
     @Transactional(readOnly = true)
@@ -60,7 +60,7 @@ public class ProductoServicio {
 
     public Producto crear(ProductoFormDto dto) {
         Categoria categoria = categoriaRepo.findById(dto.getCategoriaId())
-                .orElseThrow(() -> new NoSuchElementException("Categoría no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada"));
 
         Producto producto = new Producto(
                 dto.getNombre(),
@@ -84,7 +84,7 @@ public class ProductoServicio {
         Producto producto = buscarPorId(id);
 
         Categoria categoria = categoriaRepo.findById(dto.getCategoriaId())
-                .orElseThrow(() -> new NoSuchElementException("Categoría no encontrada"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada"));
 
         producto.setNombre(dto.getNombre());
         producto.setDescripcion(dto.getDescripcion());

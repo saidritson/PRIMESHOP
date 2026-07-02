@@ -1,12 +1,13 @@
 package com.example.PRIMESHOP.dto;
 
+import com.example.PRIMESHOP.dto.base.DtoEntrada;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 /**
  * DTO para el formulario de creación y edición de categorías.
  */
-public class CategoriaFormDto {
+public class CategoriaFormDto implements DtoEntrada {
 
     private Integer id; // null = nueva, non-null = edición
 

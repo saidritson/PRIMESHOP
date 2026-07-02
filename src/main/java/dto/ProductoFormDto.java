@@ -1,5 +1,6 @@
 package com.example.PRIMESHOP.dto;
 
+import com.example.PRIMESHOP.dto.base.DtoEntrada;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  * DTO para el formulario de creación y edición de productos.
  * Contiene todas las validaciones de Bean Validation.
  */
-public class ProductoFormDto {
+public class ProductoFormDto implements DtoEntrada {
 
     private Integer id; // null = nuevo, non-null = edición
 
