@@ -6,8 +6,20 @@
   <title>PRIMESHOP - Finalizar Compra</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/Pago.css">
+  <link rel="stylesheet" href="/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/Styles/Pago.css">
+  <style>
+    .flash-error {
+      background: #f8dada;
+      color: var(--color-error);
+      border-radius: var(--radio);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0 0 14px;
+    }
+    .boton--exito[aria-disabled="true"] { opacity: .55; pointer-events: none; }
+  </style>
 </head>
 <body>
 
@@ -29,6 +41,8 @@
       <li class="paso"><span class="paso__num">3</span>Confirmar</li>
     </ol>
 
+    <div class="flash-error" id="pago-error" style="display:none; margin: 0 16px 12px;"></div>
+
     <div class="pago__cuerpo">
 
       <div class="pago__columna">
@@ -49,27 +63,89 @@
           <h2 class="pago__rotulo">Metodo de pago</h2>
 
           <label class="metodo metodo--activo">
-            <input type="radio" name="metodo" checked>
+            <input type="radio" name="metodo" value="TARJETA" checked>
             <span>Tarjeta de credito &bull;&bull;&bull;&bull; 4242</span>
           </label>
 
           <label class="metodo">
-            <input type="radio" name="metodo">
+            <input type="radio" name="metodo" value="CONTRA_ENTREGA">
             <span>Pago contra entrega</span>
           </label>
 
           <label class="metodo">
-            <input type="radio" name="metodo">
+            <input type="radio" name="metodo" value="TRANSFERENCIA">
             <span>Transferencia bancaria</span>
           </label>
+
+          <div class="tarjeta-panel" id="tarjeta-panel">
+            <div class="tarjeta-visual">
+              <div class="tarjeta-visual__interior" id="tarjeta-interior">
+                <div class="tarjeta-cara tarjeta-cara--frente">
+                  <div class="tarjeta-chip"></div>
+                  <div class="tarjeta-marca" id="tarjeta-marca">TARJETA</div>
+                  <div class="tarjeta-numero" id="tarjeta-numero-vista">#### #### #### ####</div>
+                  <div class="tarjeta-fila-inferior">
+                    <div>
+                      <span class="tarjeta-etiqueta">Titular</span>
+                      <div class="tarjeta-titular" id="tarjeta-titular-vista">NOMBRE APELLIDO</div>
+                    </div>
+                    <div>
+                      <span class="tarjeta-etiqueta">Vence</span>
+                      <div class="tarjeta-vence" id="tarjeta-vence-vista">MM/AA</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tarjeta-cara tarjeta-cara--reverso">
+                  <div class="tarjeta-banda"></div>
+                  <div class="tarjeta-cvv-caja">
+                    <span>CVV</span>
+                    <div class="tarjeta-cvv-vista" id="tarjeta-cvv-vista">###</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="campo">
+              <label class="campo__etiqueta" for="input-numero">Numero de tarjeta</label>
+              <div class="campo__control">
+                <input type="text" id="input-numero" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" maxlength="23">
+              </div>
+              <p class="campo__error" id="error-numero"></p>
+            </div>
+
+            <div class="campo">
+              <label class="campo__etiqueta" for="input-nombre">Nombre en la tarjeta</label>
+              <div class="campo__control">
+                <input type="text" id="input-nombre" autocomplete="cc-name" placeholder="Como aparece en la tarjeta">
+              </div>
+              <p class="campo__error" id="error-nombre"></p>
+            </div>
+
+            <div class="campos-fila">
+              <div class="campo">
+                <label class="campo__etiqueta" for="input-vencimiento">Vencimiento</label>
+                <div class="campo__control">
+                  <input type="text" id="input-vencimiento" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5">
+                </div>
+                <p class="campo__error" id="error-vencimiento"></p>
+              </div>
+              <div class="campo">
+                <label class="campo__etiqueta" for="input-cvv">CVV</label>
+                <div class="campo__control">
+                  <input type="text" id="input-cvv" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4">
+                </div>
+                <p class="campo__error" id="error-cvv"></p>
+              </div>
+            </div>
+
+            <p class="tarjeta-simulacion-aviso">Esta es una simulacion de pago. No introduzcas datos reales de tu tarjeta.</p>
+          </div>
         </section>
 
         <section class="pago__seccion">
-          <h2 class="pago__rotulo">Articulos (3)</h2>
-          <div class="pago__articulos">
-            <div class="pago__articulo"><span>Sudadera Oversize &times;1</span><span>$450</span></div>
-            <div class="pago__articulo"><span>Tenis Air &times;1</span><span>$500</span></div>
-            <div class="pago__articulo"><span>Gorra Negra &times;1</span><span>$210</span></div>
+          <h2 class="pago__rotulo" id="pago-articulos-titulo">Articulos</h2>
+          <div class="pago__articulos" id="pago-articulos">
+            <p style="color:var(--gris-texto); font-size:13px;">Cargando carrito...</p>
           </div>
         </section>
 
@@ -79,21 +155,322 @@
         <section class="pago__seccion">
           <h2 class="pago__rotulo">Resumen de la orden</h2>
           <div class="resumen">
-            <div class="resumen__fila"><span>Subtotal</span><span>$1160</span></div>
-            <div class="resumen__fila"><span>Envio</span><span>$50</span></div>
-            <div class="resumen__fila"><span>Descuento</span><span>-$250</span></div>
-            <div class="resumen__total"><span>Total</span><span>$960</span></div>
+            <div class="resumen__fila"><span>Total</span><span id="pago-total">$0</span></div>
           </div>
         </section>
 
         <div class="pago__confirmar">
-          <a href="DetallePedido.html" class="boton boton--exito">Confirmar pedido</a>
+          <button type="button" class="boton boton--exito" id="pago-confirmar" style="width:100%; border:none; cursor:pointer;">
+            Confirmar pedido
+          </button>
         </div>
       </div>
 
     </div>
 
   </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var API_CARRITO = "/api/carrito";
+    var API_CHECKOUT = "/api/pedidos/checkout";
+    // TODO: reemplazar por la direccion elegida cuando exista un endpoint
+    // /api/direcciones. Por ahora se usa la unica direccion de la cuenta demo.
+    var DIRECCION_ID_DEMO = 1;
+
+    var elArticulos = document.getElementById("pago-articulos");
+    var elArticulosTitulo = document.getElementById("pago-articulos-titulo");
+    var elTotal = document.getElementById("pago-total");
+    var elError = document.getElementById("pago-error");
+    var elConfirmar = document.getElementById("pago-confirmar");
+
+    function formatoMoneda(numero) {
+      var valor = Math.round(Number(numero) || 0);
+      return "$" + valor.toLocaleString("es-MX");
+    }
+
+    function mostrarError(mensaje) {
+      elError.textContent = mensaje;
+      elError.style.display = "block";
+    }
+
+    function ocultarError() {
+      elError.style.display = "none";
+    }
+
+    function pintarCarrito(carrito) {
+      var items = carrito.items || [];
+      elArticulosTitulo.textContent = "Articulos (" + carrito.totalArticulos + ")";
+      elTotal.textContent = formatoMoneda(carrito.total);
+
+      if (items.length === 0) {
+        elArticulos.innerHTML = '<p style="color:var(--gris-texto); font-size:13px;">Tu carrito esta vacio.</p>';
+        elConfirmar.setAttribute("aria-disabled", "true");
+        return;
+      }
+
+      elConfirmar.removeAttribute("aria-disabled");
+      elArticulos.innerHTML = items.map(function (item) {
+        return '<div class="pago__articulo"><span>' + item.nombreProducto + ' &times;' + item.cantidad + '</span><span>' +
+          formatoMoneda(item.subtotal) + '</span></div>';
+      }).join("");
+    }
+
+    function cargarCarrito() {
+      return fetch(API_CARRITO, { credentials: "same-origin" })
+        .then(function (respuesta) {
+          if (respuesta.status === 401) {
+            throw new Error("Debes iniciar sesion para continuar con tu compra.");
+          }
+          if (!respuesta.ok) {
+            throw new Error("No se pudo cargar tu carrito.");
+          }
+          return respuesta.json();
+        })
+        .then(pintarCarrito)
+        .catch(function (error) {
+          mostrarError(error.message || "No se pudo cargar tu carrito.");
+        });
+    }
+
+    function metodoPagoSeleccionado() {
+      var radio = document.querySelector('input[name="metodo"]:checked');
+      return radio ? radio.value : null;
+    }
+
+    // ---------- Simulador de tarjeta: vista, formato y validacion ----------
+    var elTarjetaPanel = document.getElementById("tarjeta-panel");
+    var elInterior = document.getElementById("tarjeta-interior");
+    var inputNumero = document.getElementById("input-numero");
+    var inputNombre = document.getElementById("input-nombre");
+    var inputVencimiento = document.getElementById("input-vencimiento");
+    var inputCvv = document.getElementById("input-cvv");
+    var vistaNumero = document.getElementById("tarjeta-numero-vista");
+    var vistaTitular = document.getElementById("tarjeta-titular-vista");
+    var vistaVence = document.getElementById("tarjeta-vence-vista");
+    var vistaCvv = document.getElementById("tarjeta-cvv-vista");
+    var vistaMarca = document.getElementById("tarjeta-marca");
+    var caraFrente = document.querySelector(".tarjeta-cara--frente");
+
+    function soloDigitos(valor) { return (valor || "").replace(/\D/g, ""); }
+
+    function detectarMarca(digitos) {
+      if (/^4/.test(digitos)) return "visa";
+      if (/^(5[1-5]|2[2-7])/.test(digitos)) return "mastercard";
+      if (/^3[47]/.test(digitos)) return "amex";
+      return null;
+    }
+
+    function formatearNumero(valor) {
+      var digitos = soloDigitos(valor);
+      var marca = detectarMarca(digitos);
+      digitos = digitos.slice(0, marca === "amex" ? 15 : 16);
+      if (marca === "amex") {
+        return digitos.replace(/(\d{0,4})(\d{0,6})(\d{0,5})/, function (m, a, b, c) {
+          return [a, b, c].filter(Boolean).join(" ");
+        });
+      }
+      return digitos.replace(/(.{4})/g, "$1 ").trim();
+    }
+
+    function luhnValido(digitos) {
+      if (digitos.length < 13) return false;
+      var suma = 0, alterno = false;
+      for (var i = digitos.length - 1; i >= 0; i--) {
+        var n = parseInt(digitos.charAt(i), 10);
+        if (alterno) { n *= 2; if (n > 9) n -= 9; }
+        suma += n;
+        alterno = !alterno;
+      }
+      return suma % 10 === 0;
+    }
+
+    function marcarEstado(input, elErr, valido, mensaje) {
+      input.classList.remove("valido", "invalido");
+      if (valido === null) { elErr.textContent = ""; return; }
+      input.classList.add(valido ? "valido" : "invalido");
+      elErr.textContent = valido ? "" : mensaje;
+    }
+
+    function validarNumero(mostrar) {
+      var digitos = soloDigitos(inputNumero.value);
+      var marca = detectarMarca(digitos);
+      var longitudOk = marca === "amex" ? digitos.length === 15 : digitos.length === 16;
+      var valido = longitudOk && luhnValido(digitos);
+      if (mostrar) {
+        marcarEstado(inputNumero, document.getElementById("error-numero"),
+          digitos.length === 0 ? null : valido, "Numero de tarjeta invalido");
+      }
+      return valido;
+    }
+
+    function validarNombre(mostrar) {
+      var valido = inputNombre.value.trim().length >= 3;
+      if (mostrar) {
+        marcarEstado(inputNombre, document.getElementById("error-nombre"),
+          inputNombre.value.trim().length === 0 ? null : valido, "Ingresa el nombre como aparece en la tarjeta");
+      }
+      return valido;
+    }
+
+    function validarVencimiento(mostrar) {
+      var coincidencia = inputVencimiento.value.match(/^(\d{2})\/(\d{2})$/);
+      var valido = false;
+      if (coincidencia) {
+        var mes = parseInt(coincidencia[1], 10);
+        var anio = 2000 + parseInt(coincidencia[2], 10);
+        if (mes >= 1 && mes <= 12) {
+          var finDeMes = new Date(anio, mes, 0, 23, 59, 59);
+          valido = finDeMes >= new Date();
+        }
+      }
+      if (mostrar) {
+        marcarEstado(inputVencimiento, document.getElementById("error-vencimiento"),
+          inputVencimiento.value.length === 0 ? null : valido, "Fecha invalida o vencida");
+      }
+      return valido;
+    }
+
+    function validarCvv(mostrar) {
+      var digitos = soloDigitos(inputCvv.value);
+      var marca = detectarMarca(soloDigitos(inputNumero.value));
+      var longitudEsperada = marca === "amex" ? 4 : 3;
+      var valido = digitos.length === longitudEsperada;
+      if (mostrar) {
+        marcarEstado(inputCvv, document.getElementById("error-cvv"),
+          digitos.length === 0 ? null : valido, "CVV invalido");
+      }
+      return valido;
+    }
+
+    function actualizarVistaTarjeta() {
+      var digitos = soloDigitos(inputNumero.value);
+      var marca = detectarMarca(digitos);
+      vistaNumero.textContent = formatearNumero(inputNumero.value) || "#### #### #### ####";
+      vistaTitular.textContent = inputNombre.value.trim() ? inputNombre.value.trim().toUpperCase() : "NOMBRE APELLIDO";
+      vistaVence.textContent = inputVencimiento.value || "MM/AA";
+      vistaMarca.textContent = marca ? marca.toUpperCase() : "TARJETA";
+      caraFrente.classList.remove("marca-visa", "marca-mastercard", "marca-amex");
+      if (marca) caraFrente.classList.add("marca-" + marca);
+    }
+
+    inputNumero.addEventListener("input", function () {
+      inputNumero.value = formatearNumero(inputNumero.value);
+      actualizarVistaTarjeta();
+      validarNumero(false);
+    });
+    inputNumero.addEventListener("blur", function () { validarNumero(true); });
+
+    inputNombre.addEventListener("input", function () { actualizarVistaTarjeta(); validarNombre(false); });
+    inputNombre.addEventListener("blur", function () { validarNombre(true); });
+
+    inputVencimiento.addEventListener("input", function () {
+      var digitos = soloDigitos(inputVencimiento.value).slice(0, 4);
+      inputVencimiento.value = digitos.length > 2 ? digitos.slice(0, 2) + "/" + digitos.slice(2) : digitos;
+      actualizarVistaTarjeta();
+      validarVencimiento(false);
+    });
+    inputVencimiento.addEventListener("blur", function () { validarVencimiento(true); });
+
+    inputCvv.addEventListener("input", function () {
+      inputCvv.value = soloDigitos(inputCvv.value).slice(0, 4);
+      vistaCvv.textContent = inputCvv.value ? inputCvv.value.replace(/./g, "*") : "###";
+      validarCvv(false);
+    });
+    inputCvv.addEventListener("focus", function () { elInterior.classList.add("volteada"); });
+    inputCvv.addEventListener("blur", function () {
+      elInterior.classList.remove("volteada");
+      validarCvv(true);
+    });
+
+    function tarjetaValida() {
+      // Se evaluan los cuatro campos aunque el primero falle, para marcar
+      // todos los errores visibles a la vez.
+      var okNumero = validarNumero(true);
+      var okNombre = validarNombre(true);
+      var okVencimiento = validarVencimiento(true);
+      var okCvv = validarCvv(true);
+      return okNumero && okNombre && okVencimiento && okCvv;
+    }
+
+    function sacudirCamposInvalidos() {
+      document.querySelectorAll(".campo__control input.invalido").forEach(function (input) {
+        input.classList.add("invalido-shake");
+        input.addEventListener("animationend", function () {
+          input.classList.remove("invalido-shake");
+        }, { once: true });
+      });
+    }
+
+    function actualizarPanelMetodo() {
+      elTarjetaPanel.style.display = metodoPagoSeleccionado() === "TARJETA" ? "block" : "none";
+    }
+
+    function confirmarPedido() {
+      if (elConfirmar.getAttribute("aria-disabled") === "true") return;
+
+      ocultarError();
+
+      if (metodoPagoSeleccionado() === "TARJETA" && !tarjetaValida()) {
+        mostrarError("Revisa los datos de tu tarjeta antes de continuar.");
+        sacudirCamposInvalidos();
+        return;
+      }
+
+      elConfirmar.disabled = true;
+      elConfirmar.textContent = "Procesando...";
+
+      fetch(API_CHECKOUT, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          direccionId: DIRECCION_ID_DEMO,
+          metodoPago: metodoPagoSeleccionado()
+        })
+      })
+        .then(function (respuesta) {
+          if (respuesta.status === 401) {
+            throw new Error("Debes iniciar sesion para continuar con tu compra.");
+          }
+          return respuesta.json().then(function (cuerpo) {
+            if (!respuesta.ok) {
+              throw new Error(cuerpo.message || "No se pudo confirmar el pedido.");
+            }
+            return cuerpo;
+          });
+        })
+        .then(function (pedido) {
+          try {
+            sessionStorage.setItem("ultimoPedido", JSON.stringify(pedido));
+          } catch (e) { /* almacenamiento no disponible, se sigue igual */ }
+          window.location.href = "DetallePedido.html";
+        })
+        .catch(function (error) {
+          mostrarError(error.message || "No se pudo confirmar el pedido.");
+          elConfirmar.disabled = false;
+          elConfirmar.textContent = "Confirmar pedido";
+        });
+    }
+
+    // Resalta visualmente el metodo de pago seleccionado en tiempo real
+    document.querySelectorAll('input[name="metodo"]').forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        document.querySelectorAll(".metodo").forEach(function (etiqueta) {
+          etiqueta.classList.remove("metodo--activo");
+        });
+        radio.closest(".metodo").classList.add("metodo--activo");
+        actualizarPanelMetodo();
+      });
+    });
+
+    actualizarPanelMetodo();
+    elConfirmar.addEventListener("click", confirmarPedido);
+    cargarCarrito();
+  })();
+  </script>
 
 </body>
 </html>

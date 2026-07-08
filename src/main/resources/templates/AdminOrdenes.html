@@ -1,117 +1,56 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PRIMESHOP - Ordenes</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/Admin.css">
-</head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: cabeza('PRIMESHOP - Ordenes')}"></head>
 <body>
 
-  <div class="admin">
-
-    <header class="admin__barra">
-      <span class="logo"><img class="logo__img" src="" alt="PRIMESHOP"></span>
-      <span class="admin__usuario">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg>
-        Administrador
-      </span>
-    </header>
-
-    <nav class="admin__menu" aria-label="Menu de administracion">
-      <a href="AdminDashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard</a>
-      <a href="AdminProductos.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Productos</a>
-      <a href="AdminInventario.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.3 7L12 12l8.7-5"></path><path d="M12 22V12"></path></svg> Inventario</a>
-      <a href="AdminOrdenes.html" class="activo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"></path><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Ordenes</a>
-      <a href="AdminCategorias.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-8-8V4h6.6l8 8a2 2 0 0 1 0 2.8z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg> Categorias</a>
-    </nav>
+<div class="admin">
+    <header th:replace="~{fragments/admin :: barra}"></header>
+    <nav th:replace="~{fragments/admin :: menu('ordenes')}"></nav>
 
     <main class="admin__contenido">
+        <h1 class="admin__titulo">Ordenes</h1>
+        <p class="admin__subtitulo">Consulta las ordenes y cambia su estado</p>
 
-      <h1 class="admin__titulo">Ordenes</h1>
-      <p class="admin__subtitulo">Consulta las ordenes y cambia su estado</p>
+        <div th:if="${mensaje}" class="flash-exito" th:text="${mensaje}"></div>
 
-      <nav class="barra-filtros" aria-label="Filtrar por estado">
-        <button type="button" class="filtro-chip filtro-chip--activo">Todas</button>
-        <button type="button" class="filtro-chip">Pendiente</button>
-        <button type="button" class="filtro-chip">Procesando</button>
-        <button type="button" class="filtro-chip">Enviado</button>
-        <button type="button" class="filtro-chip">Entregado</button>
-      </nav>
+        <nav class="barra-filtros" aria-label="Filtrar por estado">
+            <a th:href="@{/admin/ordenes}" class="filtro-chip"
+               th:classappend="${estadoActivo == null} ? 'filtro-chip--activo' : ''">Todas</a>
+            <a th:each="e : ${estados}" th:href="@{/admin/ordenes(estado=${e})}" class="filtro-chip"
+               th:classappend="${estadoActivo != null and estadoActivo.name() == e.name()} ? 'filtro-chip--activo' : ''"
+               th:text="${e.descripcion}">Estado</a>
+        </nav>
 
-      <div class="tabla-envoltura">
-        <table class="tabla">
-          <thead>
-            <tr><th>Orden</th><th>Cliente</th><th>Fecha</th><th>Articulos</th><th>Total</th><th>Estado</th><th>Ver</th></tr>
-          </thead>
-          <tbody>
-
-            <tr>
-              <td>#PS-1042</td><td>Dario Cortez</td><td>12 jun 2026</td><td>3</td><td>$960</td>
-              <td>
-                <select class="select-estado" aria-label="Cambiar estado de la orden">
-                  <option>Pendiente</option>
-                  <option>Procesando</option>
-                  <option selected>Enviado</option>
-                  <option>Entregado</option>
-                  <option>Cancelado</option>
-                </select>
-              </td>
-              <td><a class="tabla__accion" href="DetallePedido.html" aria-label="Ver detalle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></td>
-            </tr>
-
-            <tr>
-              <td>#PS-1041</td><td>Ana Robles</td><td>12 jun 2026</td><td>4</td><td>$1,250</td>
-              <td>
-                <select class="select-estado" aria-label="Cambiar estado de la orden">
-                  <option selected>Pendiente</option>
-                  <option>Procesando</option>
-                  <option>Enviado</option>
-                  <option>Entregado</option>
-                  <option>Cancelado</option>
-                </select>
-              </td>
-              <td><a class="tabla__accion" href="DetallePedido.html" aria-label="Ver detalle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></td>
-            </tr>
-
-            <tr>
-              <td>#PS-1040</td><td>Luis Mata</td><td>11 jun 2026</td><td>1</td><td>$430</td>
-              <td>
-                <select class="select-estado" aria-label="Cambiar estado de la orden">
-                  <option>Pendiente</option>
-                  <option>Procesando</option>
-                  <option>Enviado</option>
-                  <option selected>Entregado</option>
-                  <option>Cancelado</option>
-                </select>
-              </td>
-              <td><a class="tabla__accion" href="DetallePedido.html" aria-label="Ver detalle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></td>
-            </tr>
-
-            <tr>
-              <td>#PS-1039</td><td>Sofia Lima</td><td>11 jun 2026</td><td>2</td><td>$780</td>
-              <td>
-                <select class="select-estado" aria-label="Cambiar estado de la orden">
-                  <option>Pendiente</option>
-                  <option selected>Procesando</option>
-                  <option>Enviado</option>
-                  <option>Entregado</option>
-                  <option>Cancelado</option>
-                </select>
-              </td>
-              <td><a class="tabla__accion" href="DetallePedido.html" aria-label="Ver detalle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></td>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
-
+        <div class="tabla-envoltura">
+            <table class="tabla">
+                <thead>
+                    <tr><th>Orden</th><th>Cliente</th><th>Fecha</th><th>Articulos</th><th>Total</th><th>Estado</th></tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pedido : ${pedidos}">
+                        <td th:text="${pedido.numeroPedido}">#PS-0000</td>
+                        <td th:text="${pedido.usuario != null ? pedido.usuario.nombre : '-'}">Cliente</td>
+                        <td th:text="${#dates.format(pedido.fecha, 'dd MMM yyyy')}">--</td>
+                        <td th:text="${pedido.detalles != null ? pedido.detalles.size() : 0}">0</td>
+                        <td th:text="'$' + ${#numbers.formatInteger(pedido.total, 1, 'COMMA')}">$0</td>
+                        <td>
+                            <form th:action="@{/admin/ordenes/{id}/estado(id=${pedido.id})}" method="post" class="fila-form">
+                                <select name="estado">
+                                    <option th:each="e : ${estados}" th:value="${e}" th:text="${e.descripcion}"
+                                            th:selected="${e.name() == pedido.estado.name()}">Estado</option>
+                                </select>
+                                <button type="submit">Aplicar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${pedidos.isEmpty()}">
+                        <td colspan="6">No hay ordenes para mostrar.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </main>
-
-  </div>
+</div>
 
 </body>
 </html>

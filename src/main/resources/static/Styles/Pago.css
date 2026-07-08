@@ -46,3 +46,108 @@
   .pago__columna .pago__seccion { padding-left: 0; padding-right: 0; }
   .pago__confirmar { padding-left: 0; padding-right: 0; }
 }
+
+/* ============================================================
+   Simulador visual de tarjeta de credito
+   ============================================================ */
+.tarjeta-panel {
+  margin-top: 4px;
+  display: grid;
+  gap: 2px;
+  animation: panelTarjetaEntrada 0.3s ease both;
+}
+@keyframes panelTarjetaEntrada {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tarjeta-visual {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 340px;
+  margin: 4px auto 20px;
+}
+.tarjeta-visual__interior {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 8 / 5;
+  transition: transform 0.6s cubic-bezier(.4, .2, .2, 1);
+  transform-style: preserve-3d;
+}
+.tarjeta-visual__interior.volteada { transform: rotateY(180deg); }
+
+.tarjeta-cara {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  padding: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, #2b2b2b, #111111);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: "Courier New", monospace;
+  transition: background 0.4s ease;
+}
+.tarjeta-cara--reverso {
+  transform: rotateY(180deg);
+  justify-content: flex-start;
+  padding: 0;
+}
+.tarjeta-banda { width: 100%; height: 42px; background: #000; margin-top: 18px; }
+.tarjeta-cvv-caja {
+  margin: 18px 18px 0 auto;
+  background: #fff;
+  color: #111;
+  border-radius: 4px;
+  padding: 8px 12px;
+  width: 74px;
+  text-align: right;
+  font-size: 12px;
+}
+.tarjeta-cvv-vista { font-weight: 800; letter-spacing: 2px; }
+
+.tarjeta-chip { width: 38px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #e8d48b, #c9a54d); }
+.tarjeta-marca { position: absolute; top: 18px; right: 18px; font-weight: 800; font-size: 13px; letter-spacing: 1px; }
+.tarjeta-numero { font-size: 18px; letter-spacing: 2px; margin: 18px 0 10px; }
+.tarjeta-fila-inferior { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
+.tarjeta-etiqueta { display: block; font-size: 9px; text-transform: uppercase; opacity: .65; letter-spacing: 1px; }
+.tarjeta-titular, .tarjeta-vence {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+/* Colores por marca detectada */
+.tarjeta-cara--frente.marca-visa { background: linear-gradient(135deg, #1a1f71, #2d3fb0); }
+.tarjeta-cara--frente.marca-mastercard { background: linear-gradient(135deg, #33251a, #6b3f24); }
+.tarjeta-cara--frente.marca-amex { background: linear-gradient(135deg, #045b8e, #1489c9); }
+
+/* Estados de validacion de los campos */
+.campo__control input.valido { border-color: var(--color-exito); }
+.campo__control input.invalido { border-color: var(--color-error); }
+.campo__error {
+  color: var(--color-error);
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 14px;
+}
+@keyframes sacudirCampo {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+.campo__control input.invalido-shake { animation: sacudirCampo 0.3s ease; }
+
+.tarjeta-simulacion-aviso {
+  font-size: 11px;
+  color: var(--gris-texto);
+  margin-top: 2px;
+  margin-bottom: 4px;
+}

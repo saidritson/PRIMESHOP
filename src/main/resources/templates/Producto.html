@@ -26,6 +26,13 @@
           <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line>
         </svg>
       </button>
+      <a href="Carrito.html" class="producto__carrito" id="producto-carrito-link" aria-label="Ver carrito">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="9" cy="20" r="1.5"></circle><circle cx="18" cy="20" r="1.5"></circle>
+          <path d="M3 4h2l2.5 12h11l2-8H6"></path>
+        </svg>
+        <span class="badge-carrito" id="carrito-badge" style="display:none;">0</span>
+      </a>
     </header>
 
     <div class="producto__encabezado">
@@ -78,9 +85,9 @@
         </div>
 
         <div class="producto__bloque">
-          <input type="text" class="producto__cantidad" value="Cantidad: 1" aria-label="Cantidad">
+          <input type="text" id="producto-cantidad" class="producto__cantidad" value="Cantidad: 1" aria-label="Cantidad">
           <div class="producto__acciones">
-            <a href="Carrito.html" class="boton boton--primario">Agregar al Carrito</a>
+            <button type="button" class="boton boton--primario" id="btn-agregar-carrito">Agregar al Carrito</button>
             <a href="Pago.html" class="boton boton--exito">Comprar Ahora</a>
           </div>
         </div>
@@ -89,6 +96,157 @@
     </div>
 
   </div>
+
+  <div class="toast" id="toast-carrito" role="status" aria-live="polite"></div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var API_CARRITO = "/api/carrito";
+    // TODO: reemplazar por el id real de la talla cuando el detalle de
+    // producto se sirva de forma dinamica; por ahora se usa un mapa demo.
+    var TALLA_ID_DEMO = { "25 cm": 101, "25.5 cm": 102, "26 cm": 103, "26.5 cm": 104 };
+
+    var btnAgregar = document.getElementById("btn-agregar-carrito");
+    var elImagenProducto = document.querySelector(".producto__galeria .imagen");
+    var elCarritoLink = document.getElementById("producto-carrito-link");
+    var elBadge = document.getElementById("carrito-badge");
+    var elToast = document.getElementById("toast-carrito");
+    var elCantidad = document.getElementById("producto-cantidad");
+    var toastTimeout;
+
+    // Permite elegir talla haciendo clic (antes no tenia comportamiento)
+    document.querySelectorAll(".talla").forEach(function (boton) {
+      boton.addEventListener("click", function () {
+        document.querySelectorAll(".talla").forEach(function (b) { b.classList.remove("talla--activa"); });
+        boton.classList.add("talla--activa");
+      });
+    });
+
+    function leerCantidad() {
+      var coincidencia = (elCantidad.value || "").match(/\d+/);
+      var valor = coincidencia ? parseInt(coincidencia[0], 10) : 1;
+      return valor > 0 ? valor : 1;
+    }
+
+    function mostrarToast(mensaje, esError) {
+      elToast.textContent = mensaje;
+      elToast.classList.toggle("toast--error", !!esError);
+      elToast.classList.add("toast--visible");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(function () {
+        elToast.classList.remove("toast--visible");
+      }, 2200);
+    }
+
+    function actualizarBadge(total) {
+      if (!elBadge) return;
+      if (total > 0) {
+        elBadge.textContent = total > 99 ? "99+" : total;
+        elBadge.style.display = "flex";
+        elBadge.classList.remove("badge-carrito--pop");
+        void elBadge.offsetWidth; // reflow para reiniciar la animacion
+        elBadge.classList.add("badge-carrito--pop");
+      } else {
+        elBadge.style.display = "none";
+      }
+    }
+
+    // Anima un circulo "volando" desde la imagen del producto hasta el
+    // icono del carrito, y hace rebotar el icono al llegar.
+    function volarAlCarrito() {
+      var origen = elImagenProducto || btnAgregar;
+      var origenRect = origen.getBoundingClientRect();
+      var destinoRect = elCarritoLink.getBoundingClientRect();
+
+      var vuelo = document.createElement("div");
+      vuelo.className = "vuelo-carrito";
+      vuelo.style.left = (origenRect.left + origenRect.width / 2 - 13) + "px";
+      vuelo.style.top = (origenRect.top + origenRect.height / 2 - 13) + "px";
+      document.body.appendChild(vuelo);
+
+      requestAnimationFrame(function () {
+        var dx = (destinoRect.left + destinoRect.width / 2) - (origenRect.left + origenRect.width / 2);
+        var dy = (destinoRect.top + destinoRect.height / 2) - (origenRect.top + origenRect.height / 2);
+        vuelo.style.transform = "translate(" + dx + "px, " + dy + "px) scale(0.2)";
+        vuelo.style.opacity = "0.15";
+      });
+
+      vuelo.addEventListener("transitionend", function () {
+        vuelo.remove();
+        elCarritoLink.classList.remove("producto__carrito--rebote");
+        void elCarritoLink.offsetWidth;
+        elCarritoLink.classList.add("producto__carrito--rebote");
+      });
+    }
+
+    // Muestra un "+1" flotante que sube y se desvanece cerca del boton
+    function flotarMasUno() {
+      var rect = btnAgregar.getBoundingClientRect();
+      var burbuja = document.createElement("span");
+      burbuja.className = "mas-uno";
+      burbuja.textContent = "+1";
+      burbuja.style.left = (rect.left + rect.width / 2 - 12) + "px";
+      burbuja.style.top = (rect.top - 4) + "px";
+      document.body.appendChild(burbuja);
+      setTimeout(function () { burbuja.remove(); }, 900);
+    }
+
+    function agregarAlCarrito() {
+      if (btnAgregar.getAttribute("aria-disabled") === "true") return;
+
+      var tallaActiva = document.querySelector(".talla--activa");
+      var nombreTalla = tallaActiva ? tallaActiva.textContent.trim() : "25 cm";
+      var productoTallaId = TALLA_ID_DEMO[nombreTalla] || 101;
+      var cantidad = leerCantidad();
+
+      btnAgregar.setAttribute("aria-disabled", "true");
+      btnAgregar.classList.add("boton--agregando");
+
+      // Retroalimentacion visual inmediata, sin esperar la respuesta del servidor
+      volarAlCarrito();
+      flotarMasUno();
+
+      fetch(API_CARRITO + "/items", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productoTallaId: productoTallaId, cantidad: cantidad })
+      })
+        .then(function (respuesta) {
+          if (respuesta.status === 401) {
+            throw new Error("Inicia sesion para agregar productos al carrito.");
+          }
+          return respuesta.json().then(function (cuerpo) {
+            if (!respuesta.ok) {
+              throw new Error((cuerpo && cuerpo.message) || "No se pudo agregar el producto.");
+            }
+            return cuerpo;
+          });
+        })
+        .then(function (carrito) {
+          actualizarBadge(carrito.totalArticulos);
+          mostrarToast("Producto agregado al carrito");
+        })
+        .catch(function (error) {
+          mostrarToast(error.message || "No se pudo agregar el producto.", true);
+        })
+        .then(function () {
+          btnAgregar.removeAttribute("aria-disabled");
+          setTimeout(function () { btnAgregar.classList.remove("boton--agregando"); }, 300);
+        });
+    }
+
+    btnAgregar.addEventListener("click", agregarAlCarrito);
+
+    // Carga silenciosa del contador inicial del carrito (ignora si no hay sesion)
+    fetch(API_CARRITO, { credentials: "same-origin" })
+      .then(function (respuesta) { return respuesta.ok ? respuesta.json() : null; })
+      .then(function (carrito) { if (carrito) actualizarBadge(carrito.totalArticulos); })
+      .catch(function () { /* sin sesion o sin red: se ignora en esta pagina */ });
+  })();
+  </script>
 
 </body>
 </html>

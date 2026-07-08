@@ -6,8 +6,18 @@
   <title>PRIMESHOP - Detalle del Pedido</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/DetallePedido.css">
+  <link rel="stylesheet" href="/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/Styles/DetallePedido.css">
+  <style>
+    .flash-error {
+      background: #f8dada;
+      color: var(--color-error);
+      border-radius: var(--radio);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
 
@@ -19,93 +29,230 @@
           <line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path>
         </svg>
       </a>
-      <span class="barra-superior__titulo">PEDIDO #PS-1042</span>
+      <span class="barra-superior__titulo" id="detalle-titulo">PEDIDO</span>
       <span style="width:24px"></span>
     </header>
 
-    <div class="detalle__cuerpo">
+    <div class="flash-error" id="detalle-error" style="display:none; margin: 0 16px 12px;"></div>
+
+    <div class="detalle__cuerpo" id="detalle-cuerpo" style="display:none;">
 
       <section class="detalle__seccion">
         <div class="detalle__estado">
-          <span class="insignia insignia--warning">Enviado</span>
-          <span class="detalle__entrega">Entrega estimada: 15 jun 2026</span>
+          <span class="insignia" id="detalle-insignia">Pendiente</span>
+          <span class="detalle__entrega" id="detalle-metodo-pago"></span>
         </div>
 
-        <div class="linea-tiempo">
-          <div class="evento evento--hecho">
-            <div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>
-            <div class="evento__texto">
-              <p class="evento__titulo">Pendiente</p>
-              <p class="evento__fecha">12 jun 2026, 10:02</p>
-            </div>
-          </div>
-          <div class="evento evento--hecho">
-            <div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>
-            <div class="evento__texto">
-              <p class="evento__titulo">Procesando</p>
-              <p class="evento__fecha">12 jun 2026, 11:30</p>
-            </div>
-          </div>
-          <div class="evento evento--hecho">
-            <div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>
-            <div class="evento__texto">
-              <p class="evento__titulo">Enviado</p>
-              <p class="evento__fecha">13 jun 2026, 09:15</p>
-            </div>
-          </div>
-          <div class="evento evento--pendiente">
-            <div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>
-            <div class="evento__texto">
-              <p class="evento__titulo">Entregado</p>
-              <p class="evento__fecha">En camino</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="detalle__seccion">
-        <h2 class="panel__titulo">Direccion de entrega</h2>
-        <div class="panel">
-          <p><strong>Dario Cortez</strong></p>
-          <p>Av. Tecnologico 1111, Centro</p>
-          <p>Cd. Obregon, Sonora, 85000</p>
+        <div class="linea-tiempo" id="detalle-linea-tiempo">
+          <!-- Eventos generados dinamicamente segun el estado del pedido -->
         </div>
       </section>
 
       <section class="detalle__seccion">
         <h2 class="panel__titulo">Articulos</h2>
-
-        <article class="detalle__articulo">
-          <span class="detalle__miniatura"><img class="imagen" src="" alt="Sudadera oversize"></span>
-          <div class="detalle__info">
-            <p class="detalle__nombre">Sudadera Oversize</p>
-            <p class="detalle__variante">Talla M &middot; Cantidad 1</p>
-          </div>
-          <span class="detalle__precio">$450</span>
-        </article>
-
-        <article class="detalle__articulo">
-          <span class="detalle__miniatura"><img class="imagen" src="" alt="Tenis Air"></span>
-          <div class="detalle__info">
-            <p class="detalle__nombre">Tenis Air</p>
-            <p class="detalle__variante">Talla 27 &middot; Cantidad 1</p>
-          </div>
-          <span class="detalle__precio">$500</span>
-        </article>
+        <div id="detalle-articulos">
+          <!-- Articulos generados dinamicamente a partir de PedidoResponseDto.detalles -->
+        </div>
       </section>
 
       <section class="detalle__seccion">
         <div class="resumen">
-          <div class="resumen__fila"><span>Subtotal</span><span>$950</span></div>
-          <div class="resumen__fila"><span>Envio</span><span>$50</span></div>
-          <div class="resumen__fila"><span>Descuento</span><span>-$40</span></div>
-          <div class="resumen__total"><span>Total</span><span>$960</span></div>
+          <div class="resumen__fila"><span>Subtotal</span><span id="detalle-subtotal">$0</span></div>
+          <div class="resumen__fila" id="detalle-ajuste-fila" style="display:none;"><span>Ajustes (envio / descuento)</span><span id="detalle-ajuste">$0</span></div>
+          <div class="resumen__total"><span>Total</span><span id="detalle-total">$0</span></div>
         </div>
       </section>
 
     </div>
 
   </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var API_MIS_PEDIDOS = "/api/pedidos/mios";
+    var CLAVE_SESION = "ultimoPedido";
+
+    var elTitulo = document.getElementById("detalle-titulo");
+    var elCuerpo = document.getElementById("detalle-cuerpo");
+    var elError = document.getElementById("detalle-error");
+    var elInsignia = document.getElementById("detalle-insignia");
+    var elMetodoPago = document.getElementById("detalle-metodo-pago");
+    var elLineaTiempo = document.getElementById("detalle-linea-tiempo");
+    var elArticulos = document.getElementById("detalle-articulos");
+    var elSubtotal = document.getElementById("detalle-subtotal");
+    var elAjusteFila = document.getElementById("detalle-ajuste-fila");
+    var elAjuste = document.getElementById("detalle-ajuste");
+    var elTotal = document.getElementById("detalle-total");
+
+    var ETAPAS = ["PENDIENTE", "PROCESANDO", "ENVIADO", "ENTREGADO"];
+    var ETIQUETAS_ETAPA = {
+      PENDIENTE: "Pendiente",
+      PROCESANDO: "Procesando",
+      ENVIADO: "Enviado",
+      ENTREGADO: "Entregado"
+    };
+    var INSIGNIA_POR_ESTADO = {
+      PENDIENTE: "insignia--neutral",
+      PROCESANDO: "insignia--info",
+      ENVIADO: "insignia--warning",
+      ENTREGADO: "insignia--exito",
+      CANCELADO: "insignia--error"
+    };
+    var METODO_PAGO_LABEL = {
+      TARJETA: "Tarjeta de credito",
+      CONTRA_ENTREGA: "Pago contra entrega",
+      TRANSFERENCIA: "Transferencia bancaria"
+    };
+
+    function formatoMoneda(numero) {
+      var valor = Math.round(Number(numero) || 0);
+      return "$" + valor.toLocaleString("es-MX");
+    }
+
+    function formatoFecha(fechaIso) {
+      if (!fechaIso) return "";
+      var fecha = new Date(fechaIso);
+      if (isNaN(fecha.getTime())) return "";
+      return fecha.toLocaleString("es-MX", {
+        day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+      });
+    }
+
+    function mostrarError(mensaje) {
+      elError.textContent = mensaje;
+      elError.style.display = "block";
+      elCuerpo.style.display = "none";
+    }
+
+    function pintarLineaTiempo(estado, fechaPedido) {
+      elLineaTiempo.innerHTML = "";
+
+      if (estado === "CANCELADO") {
+        var evento = document.createElement("div");
+        evento.className = "evento evento--hecho";
+        evento.innerHTML =
+          '<div class="evento__marca"><span class="evento__punto"></span></div>' +
+          '<div class="evento__texto"><p class="evento__titulo">Pedido cancelado</p>' +
+          '<p class="evento__fecha">' + formatoFecha(fechaPedido) + '</p></div>';
+        elLineaTiempo.appendChild(evento);
+        return;
+      }
+
+      var indiceActual = ETAPAS.indexOf(estado);
+      if (indiceActual === -1) indiceActual = 0;
+
+      ETAPAS.forEach(function (etapa, indice) {
+        var hecho = indice <= indiceActual;
+        var div = document.createElement("div");
+        div.className = "evento " + (hecho ? "evento--hecho" : "evento--pendiente");
+        div.innerHTML =
+          '<div class="evento__marca"><span class="evento__punto"></span><span class="evento__linea"></span></div>' +
+          '<div class="evento__texto">' +
+            '<p class="evento__titulo">' + ETIQUETAS_ETAPA[etapa] + '</p>' +
+            '<p class="evento__fecha">' + (indice === 0 && hecho ? formatoFecha(fechaPedido) : (hecho ? "Completado" : "Pendiente")) + '</p>' +
+          '</div>';
+        elLineaTiempo.appendChild(div);
+      });
+    }
+
+    function pintarArticulos(detalles) {
+      elArticulos.innerHTML = "";
+      (detalles || []).forEach(function (detalle) {
+        var articulo = document.createElement("article");
+        articulo.className = "detalle__articulo";
+        articulo.innerHTML =
+          '<span class="detalle__miniatura"><div class="imagen-placeholder">' + detalle.nombreProducto.charAt(0) + '</div></span>' +
+          '<div class="detalle__info">' +
+            '<p class="detalle__nombre">' + detalle.nombreProducto + '</p>' +
+            '<p class="detalle__variante">Talla ' + detalle.talla + ' &middot; Cantidad ' + detalle.cantidad + '</p>' +
+          '</div>' +
+          '<span class="detalle__precio">' + formatoMoneda(detalle.subtotal) + '</span>';
+        elArticulos.appendChild(articulo);
+      });
+    }
+
+    // Pinta el pedido completo en el DOM sin recargar la pagina.
+    function renderPedido(pedido) {
+      elTitulo.textContent = "PEDIDO #" + pedido.numeroPedido;
+
+      elInsignia.className = "insignia " + (INSIGNIA_POR_ESTADO[pedido.estado] || "insignia--neutral");
+      elInsignia.textContent = ETIQUETAS_ETAPA[pedido.estado] || pedido.estado;
+
+      elMetodoPago.textContent = METODO_PAGO_LABEL[pedido.metodoPago] || "";
+
+      pintarLineaTiempo(pedido.estado, pedido.fecha);
+      pintarArticulos(pedido.detalles);
+
+      var subtotal = (pedido.detalles || []).reduce(function (suma, d) { return suma + d.subtotal; }, 0);
+      var ajuste = pedido.total - subtotal;
+
+      elSubtotal.textContent = formatoMoneda(subtotal);
+      elTotal.textContent = formatoMoneda(pedido.total);
+      if (Math.round(ajuste) !== 0) {
+        elAjusteFila.style.display = "flex";
+        elAjuste.textContent = (ajuste > 0 ? "+" : "-") + formatoMoneda(Math.abs(ajuste));
+      }
+
+      elCuerpo.style.display = "block";
+      elError.style.display = "none";
+    }
+
+    function obtenerIdDeUrl() {
+      var parametros = new URLSearchParams(window.location.search);
+      var id = parametros.get("id");
+      return id ? Number(id) : null;
+    }
+
+    function cargarDesdeSessionStorage() {
+      try {
+        var crudo = sessionStorage.getItem(CLAVE_SESION);
+        return crudo ? JSON.parse(crudo) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function cargarPedido() {
+      var idBuscado = obtenerIdDeUrl();
+      var pedidoGuardado = cargarDesdeSessionStorage();
+
+      // Si el pedido recien confirmado coincide (o no se pidio un id concreto),
+      // se pinta de inmediato sin esperar a la red.
+      if (pedidoGuardado && (!idBuscado || pedidoGuardado.id === idBuscado)) {
+        renderPedido(pedidoGuardado);
+        return;
+      }
+
+      fetch(API_MIS_PEDIDOS, { credentials: "same-origin" })
+        .then(function (respuesta) {
+          if (respuesta.status === 401) {
+            throw new Error("Debes iniciar sesion para ver tus pedidos.");
+          }
+          if (!respuesta.ok) {
+            throw new Error("No se pudo cargar el pedido.");
+          }
+          return respuesta.json();
+        })
+        .then(function (pedidos) {
+          var pedido = idBuscado
+            ? pedidos.find(function (p) { return p.id === idBuscado; })
+            : pedidos[0];
+
+          if (!pedido) {
+            throw new Error("No se encontro el pedido solicitado.");
+          }
+          renderPedido(pedido);
+        })
+        .catch(function (error) {
+          mostrarError(error.message || "No se pudo cargar el pedido.");
+        });
+    }
+
+    cargarPedido();
+  })();
+  </script>
 
 </body>
 </html>

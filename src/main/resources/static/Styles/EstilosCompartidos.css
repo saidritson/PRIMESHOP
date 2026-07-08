@@ -28,6 +28,7 @@
   /* Medidas reutilizables */
   --radio: 10px;               /* Radio de esquinas estandar */
   --ancho-maximo: 1400px;      /* Tope para paginas de lectura/formulario */
+  --logo-altura: 32px;         /* Alto del logo: cambialo para escalar TODOS los logos a la vez */
 }
 
 /* ---------- 2. RESET BASICO ---------- */
@@ -63,12 +64,16 @@ a {
   gap: 10px;
 }
 .logo__img {
-  height: 30px;
+  height: var(--logo-altura);   /* controla el tamano del logo; el ancho se ajusta solo */
   width: auto;
   display: block;
+  max-width: 100%;
 }
-.logo__img--grande { height: 64px; }   /* Pantallas de bienvenida */
-.logo__img--mediano { height: 46px; }  /* Tarjetas de autenticacion */
+/* Tamanos rapidos segun el espacio disponible. Tambien puedes poner
+   style="height: 40px" directo en la <img> para un tamano exacto. */
+.logo__img--chico   { height: 24px; }   /* barras muy compactas */
+.logo__img--mediano { height: 46px; }   /* tarjetas de login / registro */
+.logo__img--grande  { height: 72px; }   /* pantalla de bienvenida */
 
 /* ---------- 5. IMAGENES DE CONTENIDO (<img>) ---------- */
 /* Clase para cualquier foto de producto, banner o avatar.

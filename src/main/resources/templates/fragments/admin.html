@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="cabeza(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}">PRIMESHOP - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/Styles/EstilosCompartidos.css}">
+    <link rel="stylesheet" th:href="@{/Styles/Admin.css}">
+</head>
+
+<body>
+
+<header th:fragment="barra" class="admin__barra">
+    <span class="logo"><img class="logo__img" th:src="@{/Imagenes/Logo.png}" alt="PRIMESHOP"></span>
+    <form th:action="@{/admin/logout}" method="post" class="admin__logout">
+        <span class="admin__usuario">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg>
+            <span sec:authentication="name">Administrador</span>
+        </span>
+        <button type="submit" class="admin__salir">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="M16 17l5-5-5-5"></path><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Salir
+        </button>
+    </form>
+</header>
+
+<nav th:fragment="menu(activo)" class="admin__menu" aria-label="Menu de administracion">
+    <a th:href="@{/admin/dashboard}" th:classappend="${activo == 'dashboard'} ? 'activo' : ''">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard
+    </a>
+    <a th:href="@{/admin/productos}" th:classappend="${activo == 'productos'} ? 'activo' : ''">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Productos
+    </a>
+    <a th:href="@{/admin/inventario}" th:classappend="${activo == 'inventario'} ? 'activo' : ''">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.3 7L12 12l8.7-5"></path><path d="M12 22V12"></path></svg> Inventario
+    </a>
+    <a th:href="@{/admin/ordenes}" th:classappend="${activo == 'ordenes'} ? 'activo' : ''">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"></path><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Ordenes
+    </a>
+    <a th:href="@{/admin/categorias}" th:classappend="${activo == 'categorias'} ? 'activo' : ''">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-8-8V4h6.6l8 8a2 2 0 0 1 0 2.8z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg> Categorias
+    </a>
+</nav>
+
+<span th:fragment="estadoPedido(estado)" class="insignia"
+      th:classappend="${estado.name() == 'ENTREGADO' ? 'insignia--exito' : (estado.name() == 'ENVIADO' ? 'insignia--warning' : (estado.name() == 'PROCESANDO' ? 'insignia--info' : (estado.name() == 'CANCELADO' ? 'insignia--error' : 'insignia--neutral')))}"
+      th:text="${estado.descripcion}">Estado</span>
+
+</body>
+</html>

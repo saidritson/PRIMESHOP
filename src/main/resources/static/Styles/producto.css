@@ -87,3 +87,100 @@
       .producto__galeria { margin: 0; }
       .producto__acciones { max-width: 420px; }
     }
+
+    /* ---------- Icono de carrito con badge en la barra superior ---------- */
+    .producto__carrito { position: relative; color: var(--color-secundario); display: inline-flex; }
+    .badge-carrito {
+      position: absolute;
+      top: -6px;
+      right: -8px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 999px;
+      background: var(--color-exito);
+      color: var(--color-secundario);
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @keyframes badgePop {
+      0%   { transform: scale(0); }
+      60%  { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+    .badge-carrito--pop { animation: badgePop 0.35s ease; }
+
+    @keyframes carritoRebote {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.35) rotate(-8deg); }
+      60% { transform: scale(0.92) rotate(4deg); }
+    }
+    .producto__carrito--rebote svg { animation: carritoRebote 0.5s ease; transform-origin: center; }
+
+    /* ---------- Circulo que "vuela" del producto al carrito ---------- */
+    .vuelo-carrito {
+      position: fixed;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--color-exito);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0.95;
+      transition: transform 0.6s cubic-bezier(.17,.67,.32,1.4), opacity 0.6s ease;
+    }
+
+    /* ---------- Burbuja "+1" flotante ---------- */
+    @keyframes flotarMasUno {
+      0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+      20%  { opacity: 1; transform: translateY(-6px) scale(1); }
+      100% { opacity: 0; transform: translateY(-42px) scale(1); }
+    }
+    .mas-uno {
+      position: fixed;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--color-exito);
+      pointer-events: none;
+      z-index: 999;
+      animation: flotarMasUno 0.9s ease forwards;
+    }
+
+    /* ---------- Boton "Agregar al carrito" con pulso al hacer clic ---------- */
+    @keyframes botonPulso {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+    #btn-agregar-carrito.boton--agregando { animation: botonPulso 0.3s ease; }
+    .boton[aria-disabled="true"] { opacity: 0.7; cursor: default; }
+
+    /* ---------- Aviso flotante (toast) de confirmacion ---------- */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 90px;
+      transform: translate(-50%, 16px);
+      background: var(--color-primario);
+      color: var(--color-secundario);
+      padding: 12px 22px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .toast--visible { opacity: 1; transform: translate(-50%, 0); }
+    .toast--error { background: var(--color-error); }
+
+    @media (min-width: 768px) {
+      .toast { bottom: 30px; }
+    }

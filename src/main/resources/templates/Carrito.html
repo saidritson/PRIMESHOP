@@ -7,8 +7,18 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/carrito.css">
+  <link rel="stylesheet" href="/Styles/EstilosCompartidos.css">
+  <link rel="stylesheet" href="/Styles/carrito.css">
+  <style>
+    .flash-error {
+      background: #f8dada;
+      color: var(--color-error);
+      border-radius: var(--radio);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
 
@@ -21,7 +31,7 @@
         </svg>
       </a>
       <span class="logo">
-        <img class="logo__img" src="" alt="PRIMESHOP">
+        <img class="logo__img" src="/Imagenes/Logo.png" alt="PRIMESHOP">
       </span>
       <a href="Cuenta.html" aria-label="Cuenta">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -32,87 +42,29 @@
 
     <div class="carrito__encabezado">
       <h1 class="carrito__titulo">Carrito de Compra</h1>
-      <p class="carrito__conteo">3 Articulos</p>
+      <p class="carrito__conteo" id="carrito-conteo">Cargando...</p>
     </div>
 
-    <section class="carrito__lista">
-      <article class="articulo">
-        <div class="articulo__imagen"><img class="imagen" src="" alt="Camiseta de compresion"></div>
-        <div>
-          <p class="articulo__nombre">Camiseta de compresion</p>
-          <p class="articulo__precio">$250</p>
-          <p class="articulo__desc">Camiseta de compresion deportiva tamano M color Gris</p>
-          <p class="estado-exito">Disponible</p>
-        </div>
-        <div class="articulo__controles">
-          <div class="cantidad">
-            <button type="button" aria-label="Quitar uno">&minus;</button>
-            <span>1</span>
-            <button type="button" aria-label="Agregar uno">+</button>
-          </div>
-          <a href="Pago.html" class="boton boton--primario articulo__comprar">Comprar</a>
-          <button type="button" class="articulo__eliminar" aria-label="Eliminar">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M6 6l1 14h10l1-14"></path>
-            </svg>
-          </button>
-        </div>
-      </article>
+    <!-- Aviso de error (ej. sesion expirada, fallo de red) -->
+    <div class="flash-error" id="carrito-error" style="display:none; margin: 0 16px 12px;"></div>
 
-      <article class="articulo">
-        <div class="articulo__imagen"><img class="imagen imagen--oscura" src="" alt="Tenis Nike Air"></div>
-        <div>
-          <p class="articulo__nombre">Tenis Nike</p>
-          <p class="articulo__precio">$500</p>
-          <p class="articulo__desc">Tenis Nike Air talla 27.0cm color Blanco</p>
-          <p class="estado-warning">3 en Existencia</p>
-        </div>
-        <div class="articulo__controles">
-          <div class="cantidad">
-            <button type="button" aria-label="Quitar uno">&minus;</button>
-            <span>1</span>
-            <button type="button" aria-label="Agregar uno">+</button>
-          </div>
-          <a href="Pago.html" class="boton boton--primario articulo__comprar">Comprar</a>
-          <button type="button" class="articulo__eliminar" aria-label="Eliminar">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M6 6l1 14h10l1-14"></path>
-            </svg>
-          </button>
-        </div>
-      </article>
-
-      <article class="articulo">
-        <div class="articulo__imagen"><img class="imagen" src="" alt="Pants deportivo Puma"></div>
-        <div>
-          <p class="articulo__nombre">Pants Deportivo</p>
-          <p class="articulo__precio">$210</p>
-          <p class="articulo__desc">Pants deportivo Puma talla 38x38 color Negro</p>
-          <p class="estado-exito">Disponible</p>
-        </div>
-        <div class="articulo__controles">
-          <div class="cantidad">
-            <button type="button" aria-label="Quitar uno">&minus;</button>
-            <span>1</span>
-            <button type="button" aria-label="Agregar uno">+</button>
-          </div>
-          <a href="Pago.html" class="boton boton--primario articulo__comprar">Comprar</a>
-          <button type="button" class="articulo__eliminar" aria-label="Eliminar">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M6 6l1 14h10l1-14"></path>
-            </svg>
-          </button>
-        </div>
-      </article>
-
+    <section class="carrito__lista" id="carrito-lista">
+      <!-- Los articulos se pintan dinamicamente con JS a partir de /api/carrito -->
     </section>
 
-    <div class="carrito__total">
-      <span>TOTAL:</span>
-      <span>$960</span>
+    <!-- Estado vacio, oculto hasta que se confirme que no hay articulos -->
+    <div class="panel" id="carrito-vacio" style="display:none; margin: 12px 16px; text-align:center;">
+      <p style="font-weight:700; margin-bottom:6px;">Tu carrito esta vacio</p>
+      <p style="color:var(--gris-texto); font-size:13px; margin-bottom:14px;">Agrega productos desde el catalogo para verlos aqui.</p>
+      <a href="Home.html" class="boton boton--primario">Ir al catalogo</a>
     </div>
 
-    <a href="Pago.html" class="carrito__pagar">
+    <div class="carrito__total" id="carrito-total-barra" style="display:none;">
+      <span>TOTAL:</span>
+      <span id="carrito-total">$0</span>
+    </div>
+
+    <a href="Pago.html" class="carrito__pagar" id="carrito-pagar" style="display:none;">
       <span>PAGAR</span>
       <svg width="28" height="20" viewBox="0 0 28 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <line x1="0" y1="10" x2="26" y2="10"></line><path d="M19 3l7 7-7 7"></path>
@@ -142,6 +94,217 @@
       Carrito
     </a>
   </nav>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var API_CARRITO = "/api/carrito";
+
+    var elLista = document.getElementById("carrito-lista");
+    var elConteo = document.getElementById("carrito-conteo");
+    var elTotal = document.getElementById("carrito-total");
+    var elTotalBarra = document.getElementById("carrito-total-barra");
+    var elPagar = document.getElementById("carrito-pagar");
+    var elVacio = document.getElementById("carrito-vacio");
+    var elError = document.getElementById("carrito-error");
+
+    // Evita que dos clics rapidos sobre el mismo articulo disparen
+    // peticiones simultaneas que se puedan pisar entre si.
+    var itemsBloqueados = {};
+
+    function formatoMoneda(numero) {
+      var valor = Math.round(Number(numero) || 0);
+      return "$" + valor.toLocaleString("es-MX");
+    }
+
+    function mostrarError(mensaje) {
+      elError.textContent = mensaje;
+      elError.style.display = "block";
+    }
+
+    function ocultarError() {
+      elError.style.display = "none";
+    }
+
+    function estadoStock(item) {
+      if (item.stockDisponible <= 0) {
+        return { texto: "Agotado", clase: "estado-error" };
+      }
+      if (item.stockDisponible <= 3) {
+        return { texto: item.stockDisponible + " en Existencia", clase: "estado-warning" };
+      }
+      return { texto: "Disponible", clase: "estado-exito" };
+    }
+
+    function crearArticuloEl(item, indice, idActualizado) {
+      var estado = estadoStock(item);
+      var alcanzoStock = item.cantidad >= item.stockDisponible;
+      var bloqueado = !!itemsBloqueados[item.itemId];
+
+      var articulo = document.createElement("article");
+      var esActualizado = String(item.itemId) === String(idActualizado);
+      articulo.className = "articulo articulo--nuevo" + (esActualizado ? " articulo--actualizado" : "");
+      // Efecto escalonado: cada tarjeta entra un poco despues que la anterior
+      articulo.style.animationDelay = (Math.min(indice, 8) * 0.05) + "s";
+      articulo.dataset.itemId = item.itemId;
+
+      var imagenHtml = item.imagenUrl
+        ? '<img class="imagen" src="' + item.imagenUrl + '" alt="' + item.nombreProducto + '">'
+        : '<div class="imagen-placeholder">' + item.nombreProducto.charAt(0) + '</div>';
+
+      articulo.innerHTML =
+        '<div class="articulo__imagen">' + imagenHtml + '</div>' +
+        '<div>' +
+          '<p class="articulo__nombre">' + item.nombreProducto + '</p>' +
+          '<p class="articulo__precio">' + formatoMoneda(item.precioUnitario) + '</p>' +
+          '<p class="articulo__desc">Talla ' + item.talla + '</p>' +
+          '<p class="' + estado.clase + '">' + estado.texto + '</p>' +
+        '</div>' +
+        '<div class="articulo__controles">' +
+          '<div class="cantidad">' +
+            '<button type="button" class="js-disminuir" aria-label="Quitar uno" ' + (bloqueado ? 'disabled' : '') + '>&minus;</button>' +
+            '<span class="js-cantidad">' + item.cantidad + '</span>' +
+            '<button type="button" class="js-incrementar" aria-label="Agregar uno" ' + (bloqueado || alcanzoStock ? 'disabled' : '') + '>+</button>' +
+          '</div>' +
+          '<span class="articulo__precio js-subtotal" style="margin-left:auto;">' + formatoMoneda(item.subtotal) + '</span>' +
+          '<button type="button" class="articulo__eliminar js-eliminar" aria-label="Eliminar" ' + (bloqueado ? 'disabled' : '') + '>' +
+            '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">' +
+              '<path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M6 6l1 14h10l1-14"></path>' +
+            '</svg>' +
+          '</button>' +
+        '</div>';
+
+      return articulo;
+    }
+
+    // Vuelve a pintar todo el carrito con los datos mas recientes que
+    // devuelve el backend (CarritoDto), sin recargar la pagina.
+    function renderCarrito(carrito, idActualizado) {
+      var items = carrito.items || [];
+
+      elLista.innerHTML = "";
+      items.forEach(function (item, indice) {
+        elLista.appendChild(crearArticuloEl(item, indice, idActualizado));
+      });
+
+      elConteo.textContent = carrito.totalArticulos + (carrito.totalArticulos === 1 ? " Articulo" : " Articulos");
+      elTotal.textContent = formatoMoneda(carrito.total);
+      if (items.length > 0) {
+        elTotal.classList.remove("pulso");
+        void elTotal.offsetWidth; // fuerza reflow para poder repetir la animacion
+        elTotal.classList.add("pulso");
+      }
+
+      var hayArticulos = items.length > 0;
+      elVacio.style.display = hayArticulos ? "none" : "block";
+      elLista.style.display = hayArticulos ? "grid" : "none";
+      elTotalBarra.style.display = hayArticulos ? "flex" : "none";
+      elPagar.style.display = hayArticulos ? "flex" : "none";
+    }
+
+    function manejarRespuesta(respuesta) {
+      if (respuesta.status === 401) {
+        mostrarError("Tu sesion expirado. Inicia sesion de nuevo para ver tu carrito.");
+        throw new Error("No autenticado");
+      }
+      if (!respuesta.ok) {
+        return respuesta.json().catch(function () { return null; }).then(function (cuerpo) {
+          throw new Error((cuerpo && cuerpo.message) || "No se pudo actualizar el carrito");
+        });
+      }
+      // 204 No Content (vaciar carrito) no trae cuerpo
+      if (respuesta.status === 204) {
+        return null;
+      }
+      return respuesta.json();
+    }
+
+    function cargarCarrito() {
+      ocultarError();
+      fetch(API_CARRITO, { credentials: "same-origin" })
+        .then(manejarRespuesta)
+        .then(function (carrito) {
+          if (carrito) renderCarrito(carrito);
+        })
+        .catch(function (error) {
+          if (error.message !== "No autenticado") {
+            mostrarError("No se pudo cargar tu carrito. Intenta de nuevo.");
+          }
+        });
+    }
+
+    function fijarBloqueo(itemId, valor) {
+      itemsBloqueados[itemId] = valor;
+    }
+
+    function ejecutarAccion(itemId, peticion) {
+      fijarBloqueo(itemId, true);
+      ocultarError();
+      peticion
+        .then(manejarRespuesta)
+        .then(function (carrito) {
+          fijarBloqueo(itemId, false);
+          if (carrito) {
+            renderCarrito(carrito, itemId);
+          } else {
+            // Carrito vaciado por completo
+            renderCarrito({ items: [], totalArticulos: 0, total: 0 });
+          }
+        })
+        .catch(function (error) {
+          fijarBloqueo(itemId, false);
+          if (error.message !== "No autenticado") {
+            mostrarError(error.message || "No se pudo actualizar el articulo.");
+          }
+          // Se vuelve a pedir el carrito real para no dejar la UI desincronizada
+          cargarCarrito();
+        });
+    }
+
+    function incrementar(itemId) {
+      ejecutarAccion(itemId, fetch(API_CARRITO + "/items/" + itemId + "/incrementar", {
+        method: "PUT",
+        credentials: "same-origin"
+      }));
+    }
+
+    function disminuir(itemId) {
+      ejecutarAccion(itemId, fetch(API_CARRITO + "/items/" + itemId + "/disminuir", {
+        method: "PUT",
+        credentials: "same-origin"
+      }));
+    }
+
+    function eliminar(itemId) {
+      var elArticulo = elLista.querySelector('.articulo[data-item-id="' + itemId + '"]');
+      if (elArticulo) elArticulo.classList.add("articulo--saliendo");
+      ejecutarAccion(itemId, fetch(API_CARRITO + "/items/" + itemId, {
+        method: "DELETE",
+        credentials: "same-origin"
+      }));
+    }
+
+    // Delegacion de eventos: un solo listener para todos los articulos,
+    // incluso los que se agregan/quitan dinamicamente despues de renderizar.
+    elLista.addEventListener("click", function (evento) {
+      var articulo = evento.target.closest(".articulo");
+      if (!articulo) return;
+      var itemId = articulo.dataset.itemId;
+      if (itemsBloqueados[itemId]) return;
+
+      if (evento.target.closest(".js-incrementar")) {
+        incrementar(itemId);
+      } else if (evento.target.closest(".js-disminuir")) {
+        disminuir(itemId);
+      } else if (evento.target.closest(".js-eliminar")) {
+        eliminar(itemId);
+      }
+    });
+
+    cargarCarrito();
+  })();
+  </script>
 
 </body>
 </html>

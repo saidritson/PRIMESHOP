@@ -100,6 +100,42 @@
       letter-spacing: 1px;
     }
 
+    /* ---------- Animaciones: articulo agregado/actualizado ---------- */
+    @keyframes articuloEntrada {
+      from { opacity: 0; transform: translateY(14px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .articulo--nuevo {
+      animation: articuloEntrada 0.4s cubic-bezier(.21,1.02,.73,1) both;
+    }
+
+    @keyframes articuloSalida {
+      to { opacity: 0; transform: translateX(24px) scale(0.92); }
+    }
+    .articulo--saliendo {
+      animation: articuloSalida 0.28s ease forwards;
+      pointer-events: none;
+    }
+
+    @keyframes articuloResalte {
+      0%   { background-color: #d8f0e7; }
+      100% { background-color: var(--gris-fondo); }
+    }
+    .articulo--actualizado {
+      animation: articuloEntrada 0.4s cubic-bezier(.21,1.02,.73,1) both,
+                 articuloResalte 0.7s ease both;
+    }
+
+    @keyframes totalPulso {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(1.12); color: var(--color-exito); }
+      100% { transform: scale(1); }
+    }
+    #carrito-total.pulso {
+      display: inline-block;
+      animation: totalPulso 0.4s ease;
+    }
+
     /* Escritorio*/
     @media (min-width: 768px) {
       .pagina-carrito { padding-bottom: 40px; }

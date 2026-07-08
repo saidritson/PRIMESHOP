@@ -1,98 +1,91 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PRIMESHOP - Admin Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/Admin.css">
-</head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: cabeza('PRIMESHOP - Dashboard')}"></head>
 <body>
 
-  <div class="admin">
-
-    <header class="admin__barra">
-      <span class="logo"><img class="logo__img" src="" alt="PRIMESHOP"></span>
-      <span class="admin__usuario">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg>
-        Administrador
-      </span>
-    </header>
-
-    <nav class="admin__menu" aria-label="Menu de administracion">
-      <a href="AdminDashboard.html" class="activo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard</a>
-      <a href="AdminProductos.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Productos</a>
-      <a href="AdminInventario.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.3 7L12 12l8.7-5"></path><path d="M12 22V12"></path></svg> Inventario</a>
-      <a href="AdminOrdenes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"></path><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Ordenes</a>
-      <a href="AdminCategorias.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-8-8V4h6.6l8 8a2 2 0 0 1 0 2.8z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg> Categorias</a>
-    </nav>
+<div class="admin">
+    <header th:replace="~{fragments/admin :: barra}"></header>
+    <nav th:replace="~{fragments/admin :: menu('dashboard')}"></nav>
 
     <main class="admin__contenido">
-      <h1 class="admin__titulo">Dashboard</h1>
-      <p class="admin__subtitulo">Resumen general de la tienda</p>
+        <h1 class="admin__titulo">Dashboard</h1>
+        <p class="admin__subtitulo">Resumen general de la tienda</p>
 
-      <div class="metricas">
-        <div class="metrica">
-          <p class="metrica__etiqueta">Ventas de hoy</p>
-          <p class="metrica__valor">$8,450</p>
-        </div>
-        <div class="metrica">
-          <p class="metrica__etiqueta">Ordenes pendientes</p>
-          <p class="metrica__valor">12</p>
-        </div>
-        <div class="metrica">
-          <p class="metrica__etiqueta">Productos activos</p>
-          <p class="metrica__valor">86</p>
-        </div>
-        <div class="metrica metrica--alerta">
-          <p class="metrica__etiqueta">Stock bajo</p>
-          <p class="metrica__valor">5</p>
-        </div>
-      </div>
+        <div th:if="${mensaje}" class="flash-exito" th:text="${mensaje}"></div>
 
-      <div class="alerta">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l9 16H3z"></path><line x1="12" y1="9" x2="12" y2="14"></line><circle cx="12" cy="17" r="0.5"></circle></svg>
-        5 productos por debajo del stock minimo
-      </div>
-
-      <section>
-        <h2 class="panel__titulo">Ultimas ordenes</h2>
-        <div class="tabla-envoltura">
-          <table class="tabla">
-            <thead>
-              <tr><th>Orden</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Estado</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>#PS-1042</td><td>Dario Cortez</td><td>12 jun</td><td>$960</td><td><span class="insignia insignia--warning">Enviado</span></td></tr>
-              <tr><td>#PS-1041</td><td>Ana Robles</td><td>12 jun</td><td>$1,250</td><td><span class="insignia insignia--neutral">Pendiente</span></td></tr>
-              <tr><td>#PS-1040</td><td>Luis Mata</td><td>11 jun</td><td>$430</td><td><span class="insignia insignia--exito">Entregado</span></td></tr>
-              <tr><td>#PS-1039</td><td>Sofia Lima</td><td>11 jun</td><td>$780</td><td><span class="insignia insignia--info">Procesando</span></td></tr>
-            </tbody>
-          </table>
+        <div class="metricas">
+            <div class="metrica">
+                <p class="metrica__etiqueta">Ventas de hoy</p>
+                <p class="metrica__valor" th:text="'$' + ${#numbers.formatInteger(ventasDia, 1, 'COMMA')}">$0</p>
+            </div>
+            <div class="metrica">
+                <p class="metrica__etiqueta">Ordenes pendientes</p>
+                <p class="metrica__valor" th:text="${ordenesPendientes}">0</p>
+            </div>
+            <div class="metrica">
+                <p class="metrica__etiqueta">Productos activos</p>
+                <p class="metrica__valor" th:text="${productosActivos}">0</p>
+            </div>
+            <div class="metrica metrica--alerta">
+                <p class="metrica__etiqueta">Stock bajo</p>
+                <p class="metrica__valor" th:text="${stockBajo.size()}">0</p>
+            </div>
         </div>
-      </section>
 
-      <section style="margin-top:26px">
-        <h2 class="panel__titulo">Productos con stock bajo</h2>
-        <div class="tabla-envoltura">
-          <table class="tabla">
-            <thead>
-              <tr><th>Producto</th><th>Stock actual</th><th>Minimo</th><th>Estado</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Tenis Air</td><td>3</td><td>5</td><td><span class="insignia insignia--warning">Stock bajo</span></td></tr>
-              <tr><td>Gorra Negra</td><td>2</td><td>5</td><td><span class="insignia insignia--warning">Stock bajo</span></td></tr>
-              <tr><td>Vestido de Lino</td><td>0</td><td>4</td><td><span class="insignia insignia--error">Agotado</span></td></tr>
-            </tbody>
-          </table>
+        <div th:if="${!stockBajo.isEmpty()}" class="alerta">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l9 16H3z"></path><line x1="12" y1="9" x2="12" y2="14"></line><circle cx="12" cy="17" r="0.5"></circle></svg>
+            <span th:text="${stockBajo.size()} + ' productos por debajo del stock minimo'">Stock bajo</span>
         </div>
-      </section>
 
+        <section>
+            <h2 class="panel__titulo">Ultimas ordenes</h2>
+            <div class="tabla-envoltura">
+                <table class="tabla">
+                    <thead>
+                        <tr><th>Orden</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Estado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pedido : ${ultimasOrdenes}">
+                            <td th:text="${pedido.numeroPedido}">#PS-0000</td>
+                            <td th:text="${pedido.usuario != null ? pedido.usuario.nombre : '-'}">Cliente</td>
+                            <td th:text="${#dates.format(pedido.fecha, 'dd MMM yyyy')}">--</td>
+                            <td th:text="'$' + ${#numbers.formatInteger(pedido.total, 1, 'COMMA')}">$0</td>
+                            <td><span th:replace="~{fragments/admin :: estadoPedido(${pedido.estado})}">Estado</span></td>
+                        </tr>
+                        <tr th:if="${ultimasOrdenes.isEmpty()}">
+                            <td colspan="5">Sin ordenes registradas.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section style="margin-top:26px">
+            <h2 class="panel__titulo">Productos con stock bajo</h2>
+            <div class="tabla-envoltura">
+                <table class="tabla">
+                    <thead>
+                        <tr><th>Producto</th><th>Stock actual</th><th>Minimo</th><th>Estado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="p : ${stockBajo}">
+                            <td th:text="${p.nombre}">Producto</td>
+                            <td th:text="${p.stockTotal}">0</td>
+                            <td th:text="${p.stockMinimo}">0</td>
+                            <td>
+                                <span th:if="${p.agotado}" class="insignia insignia--error">Agotado</span>
+                                <span th:unless="${p.agotado}" class="insignia insignia--warning">Stock bajo</span>
+                            </td>
+                        </tr>
+                        <tr th:if="${stockBajo.isEmpty()}">
+                            <td colspan="4">Todo el inventario esta en buen nivel.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </main>
-
-  </div>
+</div>
 
 </body>
 </html>

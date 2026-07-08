@@ -259,6 +259,61 @@
 .categorias { display: grid; gap: 20px; }
 .categorias__form { align-self: start; }
 
+/* Logout en la barra superior */
+.admin__logout { display: flex; align-items: center; gap: 14px; }
+.admin__salir {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid #555;
+  color: var(--color-secundario);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.admin__salir:hover { background: var(--color-secundario); color: var(--color-primario); }
+
+/* Interruptor activar/desactivar como boton (sin JavaScript) */
+.interruptor-btn {
+  width: 42px; height: 22px; border: none; border-radius: 20px;
+  background: #cccccc; position: relative; cursor: pointer; padding: 0;
+}
+.interruptor-btn::after {
+  content: ""; position: absolute; left: 3px; top: 3px;
+  width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: left .2s ease;
+}
+.interruptor-btn.on { background: var(--color-exito); }
+.interruptor-btn.on::after { left: 23px; }
+
+/* Formularios en linea dentro de tablas (inventario, ordenes) */
+.fila-form { display: inline-flex; align-items: center; gap: 6px; }
+.fila-form input[type="number"] {
+  width: 64px; padding: 5px 8px; border: 1px solid var(--gris-borde);
+  border-radius: 6px; font-family: inherit; font-size: 13px;
+}
+.fila-form select {
+  padding: 5px 8px; border: 1px solid var(--gris-borde); border-radius: 6px;
+  font-family: inherit; font-size: 13px; background: var(--color-secundario);
+}
+.fila-form button {
+  border: none; background: var(--color-primario); color: var(--color-secundario);
+  border-radius: 6px; padding: 6px 10px; font-family: inherit; font-size: 12px;
+  font-weight: 600; cursor: pointer;
+}
+
+/* Banner de exito (mensaje flash tras una accion) */
+.flash-exito {
+  background: #d8f0e7; border: 1px solid #00a87e; color: #00674e;
+  border-radius: var(--radio); padding: 10px 14px; font-size: 14px;
+  font-weight: 600; margin-bottom: 16px;
+}
+/* Error de validacion bajo un campo */
+.error-campo { color: var(--color-error); font-size: 12px; font-weight: 600; margin-top: 4px; display: block; }
+
 /* ESCRITORIO */
 @media (min-width: 768px) {
   .categorias { grid-template-columns: 2fr 1fr; align-items: start; }

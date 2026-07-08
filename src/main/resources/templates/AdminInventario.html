@@ -1,138 +1,58 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PRIMESHOP - Inventario</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/Admin.css">
-</head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: cabeza('PRIMESHOP - Inventario')}"></head>
 <body>
 
-  <div class="admin">
+<div class="admin">
+    <header th:replace="~{fragments/admin :: barra}"></header>
+    <nav th:replace="~{fragments/admin :: menu('inventario')}"></nav>
 
-    <header class="admin__barra">
-      <span class="logo"><img class="logo__img" src="" alt="PRIMESHOP"></span>
-      <span class="admin__usuario">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg>
-        Administrador
-      </span>
-    </header>
+    <main class="admin__contenido" th:with="bajos=${productos.?[stockBajo]},agotados=${productos.?[agotado]}">
+        <h1 class="admin__titulo">Control de inventario</h1>
+        <p class="admin__subtitulo">Ajusta las existencias (suma o resta) y vigila el stock bajo</p>
 
-    <nav class="admin__menu" aria-label="Menu de administracion">
-      <a href="AdminDashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard</a>
-      <a href="AdminProductos.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Productos</a>
-      <a href="AdminInventario.html" class="activo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.3 7L12 12l8.7-5"></path><path d="M12 22V12"></path></svg> Inventario</a>
-      <a href="AdminOrdenes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"></path><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Ordenes</a>
-      <a href="AdminCategorias.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-8-8V4h6.6l8 8a2 2 0 0 1 0 2.8z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg> Categorias</a>
-    </nav>
+        <div th:if="${mensaje}" class="flash-exito" th:text="${mensaje}"></div>
 
-    <main class="admin__contenido">
+        <div th:if="${!bajos.isEmpty() or !agotados.isEmpty()}" class="alerta">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l9 16H3z"></path><line x1="12" y1="9" x2="12" y2="14"></line><circle cx="12" cy="17" r="0.5"></circle></svg>
+            <span th:text="${bajos.size()} + ' con stock bajo y ' + ${agotados.size()} + ' agotados'">Alerta</span>
+        </div>
 
-      <h1 class="admin__titulo">Control de inventario</h1>
-      <p class="admin__subtitulo">Ajusta las existencias y vigila el stock bajo</p>
-
-      <div class="alerta">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l9 16H3z"></path><line x1="12" y1="9" x2="12" y2="14"></line><circle cx="12" cy="17" r="0.5"></circle></svg>
-        2 productos en stock bajo y 1 agotado
-      </div>
-
-      <div class="tabla-envoltura">
-        <table class="tabla">
-          <thead>
-            <tr><th>Producto</th><th>Stock actual</th><th>Minimo</th><th>Ajustar</th><th>Estado</th></tr>
-          </thead>
-          <tbody>
-
-            <tr>
-              <td>
-                <div class="producto-celda">
-                  <span class="tabla__miniatura"><img class="imagen" src="" alt="Sudadera oversize"></span>
-                  <span>Sudadera Oversize</span>
-                </div>
-              </td>
-              <td>24</td>
-              <td>5</td>
-              <td>
-                <span class="ajuste">
-                  <button type="button" aria-label="Quitar uno">&minus;</button>
-                  <input type="text" value="0" aria-label="Cantidad a ajustar">
-                  <button type="button" aria-label="Agregar uno">+</button>
-                </span>
-              </td>
-              <td><span class="insignia insignia--exito">Ok</span></td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="producto-celda">
-                  <span class="tabla__miniatura"><img class="imagen" src="" alt="Tenis Air"></span>
-                  <span>Tenis Air</span>
-                </div>
-              </td>
-              <td><span class="estado-error">3</span></td>
-              <td>5</td>
-              <td>
-                <span class="ajuste">
-                  <button type="button" aria-label="Quitar uno">&minus;</button>
-                  <input type="text" value="0" aria-label="Cantidad a ajustar">
-                  <button type="button" aria-label="Agregar uno">+</button>
-                </span>
-              </td>
-              <td><span class="insignia insignia--warning">Stock bajo</span></td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="producto-celda">
-                  <span class="tabla__miniatura"><img class="imagen" src="" alt="Gorra negra"></span>
-                  <span>Gorra Negra</span>
-                </div>
-              </td>
-              <td><span class="estado-error">2</span></td>
-              <td>5</td>
-              <td>
-                <span class="ajuste">
-                  <button type="button" aria-label="Quitar uno">&minus;</button>
-                  <input type="text" value="0" aria-label="Cantidad a ajustar">
-                  <button type="button" aria-label="Agregar uno">+</button>
-                </span>
-              </td>
-              <td><span class="insignia insignia--warning">Stock bajo</span></td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="producto-celda">
-                  <span class="tabla__miniatura"><img class="imagen" src="" alt="Vestido de lino"></span>
-                  <span>Vestido de Lino</span>
-                </div>
-              </td>
-              <td>0</td>
-              <td>4</td>
-              <td>
-                <span class="ajuste">
-                  <button type="button" aria-label="Quitar uno">&minus;</button>
-                  <input type="text" value="0" aria-label="Cantidad a ajustar">
-                  <button type="button" aria-label="Agregar uno">+</button>
-                </span>
-              </td>
-              <td><span class="insignia insignia--error">Agotado</span></td>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
-
-      <div class="admin-form__acciones">
-        <button type="button" class="boton boton--primario">Guardar cambios de inventario</button>
-      </div>
-
+        <div class="tabla-envoltura">
+            <table class="tabla">
+                <thead>
+                    <tr><th>Producto</th><th>Stock actual</th><th>Minimo</th><th>Ajuste (+/-)</th><th>Estado</th></tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${productos}">
+                        <td>
+                            <div class="producto-celda">
+                                <span class="tabla__miniatura"><img class="imagen" th:src="${p.imagenUrl}" alt="Producto"></span>
+                                <span th:text="${p.nombre}">Nombre</span>
+                            </div>
+                        </td>
+                        <td><span th:classappend="${p.stockBajo or p.agotado} ? 'estado-error' : ''" th:text="${p.stockTotal}">0</span></td>
+                        <td th:text="${p.stockMinimo}">0</td>
+                        <td>
+                            <form th:action="@{/admin/inventario/{id}/ajustar(id=${p.id})}" method="post" class="fila-form">
+                                <input type="number" name="cantidad" value="0" aria-label="Cantidad a sumar o restar">
+                                <button type="submit">Aplicar</button>
+                            </form>
+                        </td>
+                        <td>
+                            <span th:if="${p.agotado}" class="insignia insignia--error">Agotado</span>
+                            <span th:if="${p.stockBajo}" class="insignia insignia--warning">Stock bajo</span>
+                            <span th:if="${!p.agotado and !p.stockBajo}" class="insignia insignia--exito">Ok</span>
+                        </td>
+                    </tr>
+                    <tr th:if="${productos.isEmpty()}">
+                        <td colspan="5">No hay productos en el inventario.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </main>
-
-  </div>
+</div>
 
 </body>
 </html>

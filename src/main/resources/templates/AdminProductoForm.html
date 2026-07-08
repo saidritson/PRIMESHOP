@@ -1,133 +1,99 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PRIMESHOP - Nuevo Producto</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/EstilosCompartidos.css">
-  <link rel="stylesheet" href="/src/main/resources/static/Styles/Admin.css">
-</head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: cabeza('PRIMESHOP - Producto')}"></head>
 <body>
 
-  <div class="admin">
-
-    <header class="admin__barra">
-      <span class="logo"><img class="logo__img" src="" alt="PRIMESHOP"></span>
-      <span class="admin__usuario">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"></path></svg>
-        Administrador
-      </span>
-    </header>
-
-    <nav class="admin__menu" aria-label="Menu de administracion">
-      <a href="AdminDashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Dashboard</a>
-      <a href="AdminProductos.html" class="activo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Productos</a>
-      <a href="AdminInventario.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><path d="M3.3 7L12 12l8.7-5"></path><path d="M12 22V12"></path></svg> Inventario</a>
-      <a href="AdminOrdenes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"></path><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Ordenes</a>
-      <a href="AdminCategorias.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0l-8-8V4h6.6l8 8a2 2 0 0 1 0 2.8z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg> Categorias</a>
-    </nav>
+<div class="admin">
+    <header th:replace="~{fragments/admin :: barra}"></header>
+    <nav th:replace="~{fragments/admin :: menu('productos')}"></nav>
 
     <main class="admin__contenido">
+        <a th:href="@{/admin/productos}" class="admin__volver">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path></svg>
+            Volver a productos
+        </a>
 
-      <a href="AdminProductos.html" class="admin__volver">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="20" y1="12" x2="4" y2="12"></line><path d="M10 6l-6 6 6 6"></path></svg>
-        Volver a productos
-      </a>
+        <h1 class="admin__titulo" th:text="${productoForm.id == null} ? 'Nuevo producto' : 'Editar producto'">Nuevo producto</h1>
+        <p class="admin__subtitulo">Completa la informacion del articulo</p>
 
-      <h1 class="admin__titulo">Nuevo producto</h1>
-      <p class="admin__subtitulo">Completa la informacion del articulo</p>
+        <form th:action="@{/admin/productos}" th:object="${productoForm}" method="post" class="admin-form">
+            <input type="hidden" th:field="*{id}">
 
-      <form class="admin-form" action="#" method="post">
+            <div class="admin-form__campos">
+                <div class="campo">
+                    <label class="campo__etiqueta" for="nombre">Nombre del producto</label>
+                    <div class="campo__control"><input type="text" id="nombre" th:field="*{nombre}"></div>
+                    <span class="error-campo" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</span>
+                </div>
 
-        <div class="admin-form__campos">
+                <div class="campos-fila">
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="categoriaId">Categoria</label>
+                        <div class="campo__control">
+                            <select id="categoriaId" th:field="*{categoriaId}">
+                                <option value="">-- elige una categoria --</option>
+                                <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}">Categoria</option>
+                            </select>
+                        </div>
+                        <span class="error-campo" th:if="${#fields.hasErrors('categoriaId')}" th:errors="*{categoriaId}">Error</span>
+                    </div>
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="precio">Precio (MXN)</label>
+                        <div class="campo__control"><input type="number" step="0.01" id="precio" th:field="*{precio}"></div>
+                        <span class="error-campo" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}">Error</span>
+                    </div>
+                </div>
 
-          <div class="campo">
-            <label class="campo__etiqueta" for="nombre">Nombre del producto</label>
-            <div class="campo__control"><input type="text" id="nombre" name="nombre" value="Sudadera Oversize"></div>
-          </div>
+                <div class="campos-fila">
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="stockInicial">Stock inicial</label>
+                        <div class="campo__control"><input type="number" id="stockInicial" th:field="*{stockInicial}"></div>
+                        <span class="error-campo" th:if="${#fields.hasErrors('stockInicial')}" th:errors="*{stockInicial}">Error</span>
+                    </div>
+                    <div class="campo">
+                        <label class="campo__etiqueta" for="stockMinimo">Stock minimo (alerta)</label>
+                        <div class="campo__control"><input type="number" id="stockMinimo" th:field="*{stockMinimo}"></div>
+                        <span class="error-campo" th:if="${#fields.hasErrors('stockMinimo')}" th:errors="*{stockMinimo}">Error</span>
+                    </div>
+                </div>
 
-          <div class="campos-fila">
-            <div class="campo">
-              <label class="campo__etiqueta" for="categoria">Categoria</label>
-              <div class="campo__control">
-                <select id="categoria" name="categoria">
-                  <option>Sudadera</option>
-                  <option>Playera</option>
-                  <option>Tenis</option>
-                  <option>Vestidos</option>
-                  <option>Accesorios</option>
-                </select>
-              </div>
+                <div class="campo">
+                    <label class="campo__etiqueta" for="color">Color</label>
+                    <div class="campo__control"><input type="text" id="color" th:field="*{color}"></div>
+                </div>
+
+                <div class="campo">
+                    <label class="campo__etiqueta" for="descripcion">Descripcion</label>
+                    <div class="campo__control"><textarea id="descripcion" th:field="*{descripcion}"></textarea></div>
+                    <span class="error-campo" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}">Error</span>
+                </div>
+
+                <div class="campo">
+                    <label class="estado-fila">
+                        <input type="checkbox" th:field="*{activo}">
+                        <span>Activo (visible en la tienda)</span>
+                    </label>
+                </div>
             </div>
-            <div class="campo">
-              <label class="campo__etiqueta" for="precio">Precio (MXN)</label>
-              <div class="campo__control"><input type="number" id="precio" name="precio" value="450"></div>
+
+            <div class="admin-form__lateral">
+                <span class="campo__etiqueta">Imagen del producto</span>
+                <div class="admin-form__imagenes">
+                    <span class="subir-imagen">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15l-5-5L5 21"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle></svg>
+                        Proximamente
+                    </span>
+                </div>
+                <p class="admin__subtitulo" style="margin-top:14px">Al editar un producto, el stock se ajusta desde la pantalla de Inventario.</p>
             </div>
-          </div>
 
-          <div class="campos-fila">
-            <div class="campo">
-              <label class="campo__etiqueta" for="stock">Stock inicial</label>
-              <div class="campo__control"><input type="number" id="stock" name="stock" value="24"></div>
+            <div class="admin-form__acciones">
+                <button type="submit" class="boton boton--primario">Guardar producto</button>
+                <a th:href="@{/admin/productos}" class="boton boton--claro">Cancelar</a>
             </div>
-            <div class="campo">
-              <label class="campo__etiqueta" for="minimo">Stock minimo (alerta)</label>
-              <div class="campo__control"><input type="number" id="minimo" name="minimo" value="5"></div>
-            </div>
-          </div>
-
-          <div class="campo">
-            <label class="campo__etiqueta" for="descripcion">Descripcion</label>
-            <div class="campo__control"><textarea id="descripcion" name="descripcion">Sudadera de algodon con corte holgado, ideal para temporada fresca.</textarea></div>
-          </div>
-
-          <div class="campo">
-            <span class="campo__etiqueta">Tallas disponibles</span>
-            <div class="opciones-talla">
-              <label><input type="checkbox" checked> CH</label>
-              <label><input type="checkbox" checked> M</label>
-              <label><input type="checkbox" checked> G</label>
-              <label><input type="checkbox"> XG</label>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="admin-form__lateral">
-          <span class="campo__etiqueta">Imagenes del producto</span>
-          <div class="admin-form__imagenes">
-            <label class="subir-imagen subir-imagen--llena"><img class="imagen" src="" alt="Imagen principal"></label>
-            <label class="subir-imagen">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15l-5-5L5 21"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle></svg>
-              Agregar
-            </label>
-            <label class="subir-imagen">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              Agregar
-            </label>
-          </div>
-
-          <div class="lateral-estado">
-            <span class="campo__etiqueta">Estado del producto</span>
-            <div class="estado-fila">
-              <label class="interruptor"><input type="checkbox" checked aria-label="Producto activo"><span class="interruptor__pista"></span></label>
-              <span>Activo (visible en la tienda)</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="admin-form__acciones">
-          <button type="submit" class="boton boton--primario">Guardar producto</button>
-          <a href="AdminProductos.html" class="boton boton--claro">Cancelar</a>
-        </div>
-
-      </form>
-
+        </form>
     </main>
-
-  </div>
+</div>
 
 </body>
 </html>
